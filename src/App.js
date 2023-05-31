@@ -1,25 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
 
+const todoList = [
+    {
+        id: 1,
+        title: 'React'
+    },
+    {
+        id: 2,
+        title: 'HTML&CSS'
+    },
+    {
+        id: 3,
+        title: 'Redux'
+    }
+]
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return <>
+        <h1>Todo List</h1>
+        {todoList.map(t => (
+            <ul key={t.id}>
+                <li>{t.title}</li>
+            </ul>
+        ))
+        }
+    </>
 }
 
 export default App;
