@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 
-const AddTodoForm = (onAddTodo) => {
+const AddTodoForm = ({onAddTodo}) => {
     const [todoTitle, setTodoTitle] = useState('');
     const handleAddTodo = (e) => {
         e.preventDefault();
-        onAddTodo({title: todoTitle, id: Date.now()});
-        console.log(todoTitle);
+        todoTitle.trim() ? onAddTodo({title: todoTitle, id: Date.now()}) : alert('Enter a title :)')
         setTodoTitle('');
     }
     const handleTitleChange = (e) => {
