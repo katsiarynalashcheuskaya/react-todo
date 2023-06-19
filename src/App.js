@@ -4,12 +4,14 @@ import AddTodoForm from "./AddTodoForm";
 import {useState} from "react";
 
 function App() {
-    const [newTodo, setNewTodo] = useState('')
+    const [todoList, setTodoList] = useState([])
+    const addTodo = (newTodo) => {
+        setTodoList([newTodo, ...todoList]);
+    }
     return <>
         <h1>Todo List</h1>
-        <AddTodoForm onAddTodo={setNewTodo}/>
-        {newTodo}
-        <TodoList/>
+        <AddTodoForm onAddTodo={addTodo}/>
+        <TodoList todoList={todoList}/>
     </>
 }
 
