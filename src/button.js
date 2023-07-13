@@ -1,11 +1,8 @@
 import React from 'react';
 
 const Button = ({callback, children}) => {
-    const onClickHandler = () => {
-        callback();
-    }
     return (
-       <button onClick={onClickHandler}>{children}</button>
+       <button onClick={callback}>{children}</button>
     );
 };
 
