@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import InputWithLabel from "./InputWithLabel";
 
 
-const AddTodoForm = ({onAddTodo}) => {
+const AddTodoForm = ({onAddTodo, todoID}) => {
     const [todoTitle, setTodoTitle] = useState('');
-    const [todoID, setTodoID] = useState(0);
     const handleAddTodo = (e) => {
         e.preventDefault();
         todoTitle.trim() ? onAddTodo({title: todoTitle, id: todoID}) : alert('Enter a title :)')

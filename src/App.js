@@ -7,6 +7,7 @@ import IsLoading from "./components/IsLoading";
 function App() {
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [todoID, setTodoID] = useState('0');
 
     const fetchData = async () => {
         const options = {
@@ -52,7 +53,7 @@ function App() {
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`,
                 {
                     method: "POST",
                     headers: {
@@ -66,13 +67,41 @@ function App() {
             if (!response.ok) {
                 throw new Error(`Error has ocurred: ${response.status}`);
             }
-
-            const dataResponse = await response.json();
-            return dataResponse
+            const newTodo = await response.json();
+            setTodoID(newTodo.id);
+            return newTodo
 
         } catch (error) {
             console.log(error.message);
             return null;
+        }
+    }
+    const deleteTodo = async (id) => {
+        try {
+            const airtableData = {
+                id: id
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\/${id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_TOKEN}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            return await response.json()
+
+        } catch (error) {
+            console.log(error.message);
         }
     }
 
@@ -86,6 +115,7 @@ function App() {
         setTodoList([newTodo, ...todoList]);
     }
     const removeTodo = (id) => {
+        deleteTodo(id);
         const newTodolist = todoList.filter(el => el.id !== id);
         setTodoList(newTodolist);
     }
@@ -98,7 +128,7 @@ function App() {
 
     return <>
         <h1>Todo List</h1>
-        <AddTodoForm onAddTodo={addTodo}/>
+        <AddTodoForm onAddTodo={addTodo} todoID={todoID}/>
         {isLoading && <IsLoading/>}
         <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
     </>
