@@ -4,19 +4,18 @@ import AddTodoForm from "./components/AddTodoForm";
 import {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
 
-function App() {
+const App = () => {
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [todoID, setTodoID] = useState('0');
 
     const fetchData = async () => {
         const options = {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_TOKEN}`
+                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_SECRET_TOKEN}`
             }
         }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`
+        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_ID}\\`
         try {
             const response = await fetch(url, options);
 
@@ -25,12 +24,12 @@ function App() {
             }
 
             const data = await response.json();
+            console.log(data.records)
 
             const todos = data.records.map((todo) => {
                 const newTodo = {
                     id: todo.id,
-                    title: todo.fields.title,
-                    createdAt: todo.fields.createdAt
+                    title: todo.fields.todoTitle
                 }
 
                 return newTodo
@@ -48,17 +47,17 @@ function App() {
         try {
             const airtableData = {
                 fields: {
-                    title: todo
+                    todoTitle: todo
                 }
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_ID}\\`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_TOKEN}`,
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_SECRET_TOKEN}`,
                     },
                     body: JSON.stringify(airtableData),
                 }
@@ -67,8 +66,9 @@ function App() {
             if (!response.ok) {
                 throw new Error(`Error has ocurred: ${response.status}`);
             }
+
             const newTodo = await response.json();
-            setTodoID(newTodo.id);
+            setTodoList([newTodo, ...todoList])
             return newTodo
 
         } catch (error) {
@@ -83,12 +83,12 @@ function App() {
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\/${id}`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_ID}\/${id}`,
                 {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_TOKEN}`,
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_SECRET_TOKEN}`,
                     },
                     body: JSON.stringify(airtableData),
                 }
@@ -107,28 +107,24 @@ function App() {
 
     useEffect(() => {
         fetchData()
-            .then(r => setIsLoading(false));
+            .then(r => {
+                setIsLoading(false)
+            });
     }, [])
 
-    const addTodo = (newTodo) => {
-        postTodo(newTodo.title);
-        setTodoList([newTodo, ...todoList]);
+    const addTodo = (todoTitle) => {
+        postTodo(todoTitle)
+            //.then(res=>setTodoList([res, ...todoList]))
     }
     const removeTodo = (id) => {
-        deleteTodo(id);
+        deleteTodo(id)
         const newTodolist = todoList.filter(el => el.id !== id);
         setTodoList(newTodolist);
     }
 
-    useEffect(() => {
-        if (!isLoading) {
-            localStorage.setItem('savedTodoList', JSON.stringify(todoList));
-        }
-    }, [todoList])
-
     return <>
-        <h1>Todo List</h1>
-        <AddTodoForm onAddTodo={addTodo} todoID={todoID}/>
+        <h1>Todo App</h1>
+        <AddTodoForm callback={addTodo}/>
         {isLoading && <IsLoading/>}
         <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
     </>

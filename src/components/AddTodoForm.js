@@ -2,23 +2,23 @@ import React, {useState} from 'react';
 import InputWithLabel from "./InputWithLabel";
 
 
-const AddTodoForm = ({onAddTodo, todoID}) => {
-    const [todoTitle, setTodoTitle] = useState('');
+const AddTodoForm = React.memo(({callback}) => {
+    const [title, setTitle] = useState('');
     const handleAddTodo = (e) => {
         e.preventDefault();
-        todoTitle.trim() ? onAddTodo({title: todoTitle, id: todoID}) : alert('Enter a title :)')
-        setTodoTitle('');
+        title.trim() ? callback(title) : alert('Enter a title :)')
+        setTitle('');
     }
     const handleTitleChange = () => {
         const newTodoTitle = document.getElementById("todoTitle").value;
-        setTodoTitle(newTodoTitle);
+        setTitle(newTodoTitle);
     }
     return (
         <form onSubmit={handleAddTodo}>
-            <InputWithLabel value={todoTitle} onChange={handleTitleChange}>Title: </InputWithLabel>
+            <InputWithLabel value={title} onChange={handleTitleChange}>Title: </InputWithLabel>
             <button>Add</button>
         </form>
     )
-};
+})
 
 export default AddTodoForm;

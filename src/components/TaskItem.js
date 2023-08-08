@@ -1,16 +1,19 @@
 import React from 'react';
 import Button from "../button";
 
-const TodoListItem = ({todo, onRemoveTodo, id}) => {
+const TaskItem = ({task, onRemoveTask, taskID, todoID}) => {
     const callbackHandler = () => {
-        onRemoveTodo(id)
+        onRemoveTask(id)
     }
     return (
+        <div>
             <li>
-                {todo}
+                {task}
                 <Button callback={callbackHandler}>X</Button>
             </li>
+
+        </div>
     )
 };
 
-export default TodoListItem;
+export default TaskItem;
