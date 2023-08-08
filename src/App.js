@@ -24,15 +24,12 @@ const App = () => {
             }
 
             const data = await response.json();
-            console.log(data.records)
 
             const todos = data.records.map((todo) => {
-                const newTodo = {
+                return {
                     id: todo.id,
-                    title: todo.fields.todoTitle
+                    title: todo.fields.title
                 }
-
-                return newTodo
 
             });
 
@@ -47,7 +44,7 @@ const App = () => {
         try {
             const airtableData = {
                 fields: {
-                    todoTitle: todo
+                    title: todo
                 }
             }
 
@@ -67,9 +64,13 @@ const App = () => {
                 throw new Error(`Error has ocurred: ${response.status}`);
             }
 
-            const newTodo = await response.json();
+            const data = await response.json();
+            const newTodo = {
+                id: data.id,
+                title: data.fields.title
+            }
+
             setTodoList([newTodo, ...todoList])
-            return newTodo
 
         } catch (error) {
             console.log(error.message);
@@ -112,9 +113,8 @@ const App = () => {
             });
     }, [])
 
-    const addTodo = (todoTitle) => {
-        postTodo(todoTitle)
-            //.then(res=>setTodoList([res, ...todoList]))
+    const addTodo = (title) => {
+        postTodo(title);
     }
     const removeTodo = (id) => {
         deleteTodo(id)
