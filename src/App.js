@@ -3,6 +3,13 @@ import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
 import {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
+import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
+import Button from "./button";
+
+const PATH = {
+    TODO_APP: '/todo-app',
+    HOME: '/home',
+}
 
 const App = () => {
     const [todoList, setTodoList] = useState([]);
@@ -122,12 +129,23 @@ const App = () => {
         setTodoList(newTodolist);
     }
 
-    return <>
-        <h1>Todo App</h1>
-        <AddTodoForm callback={addTodo}/>
-        {isLoading && <IsLoading/>}
-        <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
-    </>
+    return <BrowserRouter>
+        <Routes>
+            <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
+            <Route path={PATH.TODO_APP} element={<>
+                <Link to={PATH.HOME}><Button>Home</Button></Link>
+                <AddTodoForm callback={addTodo}/>
+                {isLoading && <IsLoading/>}
+                <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
+            </>}
+                   />
+            <Route path={PATH.HOME} element={<>
+            <h1>Todo App</h1>
+                <Link to={PATH.TODO_APP}><Button>Let's start</Button></Link>
+            </>
+            }/>
+        </Routes>
+    </BrowserRouter>
 }
 
 export default App;
