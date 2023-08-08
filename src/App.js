@@ -12,10 +12,10 @@ const App = () => {
         const options = {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_SECRET_TOKEN}`
+                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
             }
         }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_ID}\\`
+        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`
         try {
             const response = await fetch(url, options);
 
@@ -52,12 +52,12 @@ const App = () => {
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_ID}\\`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_SECRET_TOKEN}`,
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
                     },
                     body: JSON.stringify(airtableData),
                 }
@@ -83,12 +83,12 @@ const App = () => {
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_ID}\/${id}`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\/${id}`,
                 {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_SECRET_TOKEN}`,
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
                     },
                     body: JSON.stringify(airtableData),
                 }
