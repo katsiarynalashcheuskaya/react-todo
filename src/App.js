@@ -13,9 +13,10 @@ const PATH = {
 
 const App = () => {
     const [todoList, setTodoList] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchData = async () => {
+    const getTodo = async () => {
         const options = {
             method: 'GET',
             headers: {
@@ -37,10 +38,10 @@ const App = () => {
                     id: todo.id,
                     title: todo.fields.title
                 }
-
             });
 
             setTodoList(todos);
+            console.log(todos)
 
 
         } catch (error) {
@@ -113,12 +114,47 @@ const App = () => {
         }
     }
 
+    const getTasks = async () => {
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
+            }
+        }
+        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/`
+        try {
+            const response = await fetch(url, options);
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+
+            const tasks = data.records.map((task) => {
+                    return {
+                        taskID: task.id,
+                        todoID: task.fields.todo,
+                        title: task.fields.taskTitle
+                }
+            });
+
+            setTasks(tasks);
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     useEffect(() => {
-        fetchData()
+        getTodo()
             .then(r => {
                 setIsLoading(false)
             });
+        getTasks();
     }, [])
+
 
     const addTodo = (title) => {
         postTodo(title);
@@ -136,7 +172,7 @@ const App = () => {
                 <Link to={PATH.HOME}><Button>Home</Button></Link>
                 <AddTodoForm callback={addTodo}/>
                 {isLoading && <IsLoading/>}
-                <TodoList todoList={todoList} onRemoveTodo={removeTodo}/>
+                <TodoList todoList={todoList} tasks={tasks} onRemoveTodo={removeTodo}/>
             </>}
                    />
             <Route path={PATH.HOME} element={<>

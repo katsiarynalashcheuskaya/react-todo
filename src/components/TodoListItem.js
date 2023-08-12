@@ -1,7 +1,8 @@
 import React from 'react';
 import Button from "../button";
+import Task from "./Task";
 
-const TodoListItem = ({todo, onRemoveTodo, id}) => {
+const TodoListItem = ({todo, onRemoveTodo, id, tasks}) => {
     const callbackHandler = () => {
         onRemoveTodo(id)
     }
@@ -9,6 +10,7 @@ const TodoListItem = ({todo, onRemoveTodo, id}) => {
             <li>
                 {todo}
                 <Button callback={callbackHandler}>X</Button>
+                <Task tasks={tasks} id={id}/>
             </li>
     )
 };
