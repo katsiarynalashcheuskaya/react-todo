@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from "../button";
 
-const TaskItem = ({task, onRemoveTask}) => {
+const TaskItem = ({task, onRemoveTask, id}) => {
     const callbackHandler = () => {
-        /*onRemoveTask(id)*/
+        onRemoveTask(id)
     }
     return (
         <div>

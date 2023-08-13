@@ -1,16 +1,16 @@
 import React, {useEffect, useRef} from 'react';
 
-const InputWithLabel = ({value, onChange, children}) => {
+const ReusableInput = ({value, onChange, children, placeholder}) => {
     const inputRef = useRef();
     useEffect(() => {
         inputRef.current.focus()
     })
     return (
         <>
-            <label htmlFor='todoTitle'>{children}</label>
-            <input id='todoTitle' name='title' ref={inputRef} value={value} onChange={onChange}></input>
+            <label htmlFor='itemTitle'>{children}</label>
+            <input id='itemTitle' name='title' ref={inputRef} value={value} onChange={onChange} placeholder={placeholder}></input>
         </>
     );
 };
 
-export default InputWithLabel;
+export default ReusableInput;

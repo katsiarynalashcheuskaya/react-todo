@@ -6,7 +6,7 @@ const Task = ({tasks, onRemoveTask, id}) => {
     );
     return (
         <ul>
-            {tasksForTodolist.map(t => <TaskItem key={t.id} taskID={t.taskID} task={t.title} onRemoveTask={onRemoveTask}/>)
+            {tasksForTodolist.map(t => <TaskItem key={t.taskID} id={t.taskID} task={t.title} onRemoveTask={onRemoveTask}/>)
             }
         </ul>
     )
