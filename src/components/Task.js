@@ -2,13 +2,11 @@ import React from 'react';
 import TaskItem from "./TaskItem";
 
 const Task = ({tasks, onRemoveTask, id}) => {
-    let tasksForTodolist  = tasks.filter(t => {
-        console.log(t.todoID)
-        console.log(id)
-    });
+    let tasksForTodolist  = tasks.filter(t => t.todoID === id
+    );
     return (
         <ul>
-            {tasks.map(t => <TaskItem key={t.id} taskID={t.id} task={t.title} onRemoveTask={onRemoveTask}/>)
+            {tasksForTodolist.map(t => <TaskItem key={t.id} taskID={t.taskID} task={t.title} onRemoveTask={onRemoveTask}/>)
             }
         </ul>
     )

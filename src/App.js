@@ -41,7 +41,6 @@ const App = () => {
             });
 
             setTodoList(todos);
-            console.log(todos)
 
 
         } catch (error) {
@@ -130,15 +129,15 @@ const App = () => {
             }
 
             const data = await response.json();
-            console.log(data)
 
             const tasks = data.records.map((task) => {
                     return {
                         taskID: task.id,
-                        todoID: task.fields.todo,
+                        todoID: task.fields.todo[0],
                         title: task.fields.taskTitle
                 }
             });
+            console.log(tasks)
 
             setTasks(tasks);
 
