@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import ReusableInput from "./ReusableInput";
 
 
-const AddItemForm = React.memo(({callback, placeholder}) => {
+const AddItemForm = React.memo(({callback, placeholder, id}) => {
     const [title, setTitle] = useState('');
     const handleAddItem = (e) => {
         e.preventDefault();
-        title.trim() ? callback(title) : alert('Enter a title :)')
+        title.trim() ? callback(title, id) : alert('Enter a title :)')
         setTitle('');
     }
     const handleTitleChange = (e) => {

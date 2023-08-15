@@ -14,7 +14,6 @@ const PATH = {
 const App = () => {
     const [todoList, setTodoList] = useState([]);
     const [tasks, setTasks] = useState([]);
-    const [todoID, setTodoID] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     const getTodo = async () => {
@@ -145,16 +144,17 @@ const App = () => {
             console.log(error.message)
         }
     }
-    const postTask = async (title, todoID) => {
+    const postTask = async (title, id) => {
         try {
             const airtableData = {
                 fields: {
-                    taskTitle: title
+                    taskTitle: title,
+                    todo: [id]
                 }
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks\\`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/`,
                 {
                     method: "POST",
                     headers: {
@@ -170,14 +170,14 @@ const App = () => {
             }
 
             const data = await response.json();
+            console.log(data)
             const newTask = {
+                todoID: data.fields.todo[0],
                 taskID: data.id,
-                taskTitle: data.fields.taskTitle
+                title: data.fields.taskTitle
             }
 
-            //setTodoID(todoID);
-
-            setTodoList([newTask, ...tasks]);
+            setTasks([newTask, ...tasks]);
 
         } catch (error) {
             console.log(error.message);
@@ -206,8 +206,9 @@ const App = () => {
         } )
         setTasks(newTasks);
     }
-    const addTask = (title) => {
-        postTask(title, todoID);
+    const addTask = (title, id) => {
+        postTask(title, id);
+
     }
     const removeTask = (id) => {
         deleteItem(id)
