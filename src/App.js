@@ -1,6 +1,6 @@
 import './App.css';
 import TodoList from "./components/TodoList";
-import AddItemForm from "./components/AddTodoForm";
+import AddItemForm from "./components/AddItemForm";
 import {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
@@ -146,7 +146,6 @@ const App = () => {
         }
     }
     const postTask = async (title, todoID) => {
-        console.log(title, todoID)
         try {
             const airtableData = {
                 fields: {
@@ -155,7 +154,7 @@ const App = () => {
             }
 
             const response = await fetch(
-                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`,
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks\\`,
                 {
                     method: "POST",
                     headers: {
@@ -171,16 +170,14 @@ const App = () => {
             }
 
             const data = await response.json();
-            console.log(data)
             const newTask = {
-                taskID: data.taskID,
-                todoID: data.todoID,
+                taskID: data.id,
                 taskTitle: data.fields.taskTitle
             }
 
-            setTodoID(todoID)
+            //setTodoID(todoID);
 
-            setTodoList([newTask, ...tasks])
+            setTodoList([newTask, ...tasks]);
 
         } catch (error) {
             console.log(error.message);

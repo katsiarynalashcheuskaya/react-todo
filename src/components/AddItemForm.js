@@ -1,21 +1,20 @@
 import React, {useState} from 'react';
-import ReusableInput from "./InputWithLabel";
+import ReusableInput from "./ReusableInput";
 
 
 const AddItemForm = React.memo(({callback, placeholder}) => {
     const [title, setTitle] = useState('');
-    const handleAddTodo = (e) => {
+    const handleAddItem = (e) => {
         e.preventDefault();
-        callback(title);
-        /*title.trim() ? callback(title) : alert('Enter a title :)')*/
+        title.trim() ? callback(title) : alert('Enter a title :)')
         setTitle('');
     }
-    const handleTitleChange = () => {
-        const newItemTitle = document.getElementById("itemTitle").value;
+    const handleTitleChange = (e) => {
+        const newItemTitle = e.currentTarget.value;
         setTitle(newItemTitle);
     }
     return (
-        <form onSubmit={handleAddTodo}>
+        <form onSubmit={handleAddItem}>
             <ReusableInput value={title} onChange={handleTitleChange} placeholder={placeholder}></ReusableInput>
             <button>+</button>
         </form>

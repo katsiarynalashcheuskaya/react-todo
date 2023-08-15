@@ -6,14 +6,11 @@ const TaskItem = ({task, onRemoveTask, id}) => {
         onRemoveTask(id)
     }
     return (
-        <div>
             <li>
                 <input type="checkbox"/>
                 {task}
-                <Button callback={callbackHandler}>X</Button>
+                <Button callback={callbackHandler}>x</Button>
             </li>
-
-        </div>
     )
 };
 
