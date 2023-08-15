@@ -1,11 +1,13 @@
 import React from 'react';
 import TaskItem from "./TaskItem";
+import AddItemForm from "./AddItemForm";
 
-const Task = ({tasks, onRemoveTask, todoID}) => {
+const Task = ({tasks, onRemoveTask, id, onAddTask}) => {
+    let tasksForTodolist  = tasks.filter(t => t.todoID === id);
     return (
         <ul>
-            {tasks.map(t => <TaskItem key={t.id} taskID={t.id} task={t.title}  todoID={todoID} onRemoveTask={onRemoveTask}/>)
-            }
+            <AddItemForm callback={onAddTask} id={id} placeholder={'New task...'}/>
+            {tasksForTodolist.map(t => <TaskItem key={t.taskID} id={t.taskID} task={t.title} onRemoveTask={onRemoveTask}/>)}
         </ul>
     )
 };
