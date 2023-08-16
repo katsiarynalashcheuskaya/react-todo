@@ -7,7 +7,8 @@ const Task = ({tasks, onRemoveTask, id, onAddTask, onStatusChange}) => {
     return (
         <ul>
             <AddItemForm callback={onAddTask} id={id} placeholder={'New task...'}/>
-            {tasksForTodolist.map(t => <TaskItem key={t.taskID} id={t.taskID} task={t.title} status={t.status} onRemoveTask={onRemoveTask} onStatusChange={onStatusChange}/>)}
+            {tasksForTodolist.map(t => <TaskItem key={t.taskID} id={t.taskID} task={t.title} status={t.status}
+                                                 onRemoveTask={onRemoveTask} onStatusChange={onStatusChange}/>)}
         </ul>
     )
 };

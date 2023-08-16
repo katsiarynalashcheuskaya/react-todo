@@ -188,7 +188,6 @@ const App = () => {
     const updateTaskStatus = async (status, id) => {
         try {
             const airtableData = {
-                id: id,
                 fields: {
                     status: status
                 }
@@ -213,7 +212,6 @@ const App = () => {
             const data = await response.json();
             console.log(data)
             const tasks = data.map(t => t.id === id ? {...t, status: status} : t)
-
             setTasks(tasks);
 
         } catch (error) {
@@ -253,7 +251,8 @@ const App = () => {
         setTasks(newTasks);
     }
     const changeTaskStatus = (status, id) => {
-        //updateTaskStatus(status, id)
+
+        updateTaskStatus(status, id)
     }
 
     return <BrowserRouter>
