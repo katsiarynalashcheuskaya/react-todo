@@ -15,6 +15,7 @@ const App = () => {
     const [todoList, setTodoList] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [status, setStatus] = useState(false)
 
     const getTodo = async () => {
         const options = {
@@ -112,7 +113,6 @@ const App = () => {
             console.log(error.message);
         }
     }
-
     const getTasks = async () => {
         const options = {
             method: 'GET',
@@ -134,7 +134,8 @@ const App = () => {
                 return {
                     taskID: task.id,
                     todoID: task.fields.todo[0],
-                    title: task.fields.taskTitle
+                    title: task.fields.taskTitle,
+                    status: task.fields.status
                 }
             });
 
@@ -149,7 +150,7 @@ const App = () => {
             const airtableData = {
                 fields: {
                     taskTitle: title,
-                    todo: [id]
+                    todo: [id],
                 }
             }
 
@@ -178,6 +179,42 @@ const App = () => {
             }
 
             setTasks([newTask, ...tasks]);
+
+        } catch (error) {
+            console.log(error.message);
+            return null;
+        }
+    }
+    const updateTaskStatus = async (status, id) => {
+        try {
+            const airtableData = {
+                id: id,
+                fields: {
+                    status: status
+                }
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            const tasks = data.map(t => t.id === id ? {...t, status: status} : t)
+
+            setTasks(tasks);
 
         } catch (error) {
             console.log(error.message);
@@ -215,6 +252,9 @@ const App = () => {
         const newTasks = tasks.filter(el => el.taskID !== id);
         setTasks(newTasks);
     }
+    const changeTaskStatus = (status, id) => {
+        //updateTaskStatus(status, id)
+    }
 
     return <BrowserRouter>
         <Routes>
@@ -223,7 +263,9 @@ const App = () => {
                 <Link to={PATH.HOME}><Button>Home</Button></Link>
                 <AddItemForm callback={addTodo} placeholder={'New todo...'}/>
                 {isLoading && <IsLoading/>}
-                <TodoList todoList={todoList} tasks={tasks} onRemoveTodo={removeTodo} onRemoveTask={removeTask} onAddTask={addTask}/>
+                <TodoList todoList={todoList} tasks={tasks}
+                          onRemoveTodo={removeTodo} onRemoveTask={removeTask}
+                          onAddTask={addTask} onStatusChange={changeTaskStatus}/>
             </>}
             />
             <Route path={PATH.HOME} element={<>
