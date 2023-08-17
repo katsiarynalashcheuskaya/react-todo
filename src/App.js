@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 import Button from "./button";
+import Header from "./components/Header";
 
 const PATH = {
     TODO_APP: '/todo-app',
@@ -186,17 +187,19 @@ const App = () => {
         }
     }
     const updateTaskStatus = async (status, id) => {
+        const newStatus = status ? status : null
         try {
             const airtableData = {
+                id: id,
                 fields: {
-                    status: status
+                    status: newStatus
                 }
             }
 
             const response = await fetch(
                 `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/${id}`,
                 {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -211,8 +214,8 @@ const App = () => {
 
             const data = await response.json();
             console.log(data)
-            const tasks = data.map(t => t.id === id ? {...t, status: status} : t)
-            setTasks(tasks);
+            const st = data.fields.status;
+            setStatus(!st)
 
         } catch (error) {
             console.log(error.message);
@@ -251,8 +254,9 @@ const App = () => {
         setTasks(newTasks);
     }
     const changeTaskStatus = (status, id) => {
-
         updateTaskStatus(status, id)
+        const newTasks = tasks.map(t => t.id === id ? {...t, status: !status} : t)
+        setTasks(newTasks)
     }
 
     return <BrowserRouter>
@@ -271,7 +275,8 @@ const App = () => {
                 <h1>Todo App</h1>
                 <Link to={PATH.TODO_APP}><Button>Let's start</Button></Link>
             </>
-            }/>
+            }
+            />
         </Routes>
     </BrowserRouter>
 }

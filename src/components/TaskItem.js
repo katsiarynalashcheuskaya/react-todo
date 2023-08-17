@@ -7,12 +7,12 @@ const TaskItem = ({task, onRemoveTask, id, status, onStatusChange}) => {
     }
 
     const changeTaskStatusHandler = (e) => {
-        onStatusChange(e.currentTarget.value, id)
+        onStatusChange(e.target.checked, id)
     }
 
     return (
             <li>
-                <input type="checkbox" checked={status} value={status} onChange={changeTaskStatusHandler}/>
+                <input type="checkbox" checked={status} onChange={changeTaskStatusHandler}/>
                 {task}
                 <Button callback={deleteTaskHandler}>x</Button>
             </li>
