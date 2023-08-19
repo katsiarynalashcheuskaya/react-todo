@@ -7,7 +7,8 @@ const TaskItem = ({task, onRemoveTask, id, status, onStatusChange}) => {
     }
 
     const changeTaskStatusHandler = (e) => {
-        onStatusChange(e.target.checked, id)
+        const newStatus = e.target.checked
+        onStatusChange(newStatus, id)
     }
 
     return (

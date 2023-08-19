@@ -16,7 +16,6 @@ const App = () => {
     const [todoList, setTodoList] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [status, setStatus] = useState(false)
 
     const getTodo = async () => {
         const options = {
@@ -187,10 +186,9 @@ const App = () => {
         }
     }
     const updateTaskStatus = async (status, id) => {
-        const newStatus = status ? status : null
+        const newStatus = status===undefined ? null : status
         try {
             const airtableData = {
-                id: id,
                 fields: {
                     status: newStatus
                 }
@@ -214,8 +212,14 @@ const App = () => {
 
             const data = await response.json();
             console.log(data)
-            const st = data.fields.status;
-            setStatus(!st)
+            const newTasks = tasks.map((t) => {
+               if ( t.taskID === data.id ) {
+                   const newTask = {...t, status: data.fields.status}
+                   return newTask
+               } else return t
+            })
+
+            console.log(newTasks)
 
         } catch (error) {
             console.log(error.message);
@@ -255,7 +259,9 @@ const App = () => {
     }
     const changeTaskStatus = (status, id) => {
         updateTaskStatus(status, id)
-        const newTasks = tasks.map(t => t.id === id ? {...t, status: !status} : t)
+        const newStatus = status? status : false
+        const newTasks = tasks.map(t=>t.taskID === id ? {...t, status: newStatus} : t)
+        console.log(newTasks)
         setTasks(newTasks)
     }
 
