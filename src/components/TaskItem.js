@@ -1,15 +1,21 @@
 import React from 'react';
 import Button from "../button";
 
-const TaskItem = ({task, onRemoveTask, id}) => {
-    const callbackHandler = () => {
+const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
+    const deleteTaskHandler = () => {
         onRemoveTask(id)
     }
+
+    const changeTaskStatusHandler = (e) => {
+        const newStatus = e.target.checked
+        changeTaskStatus(newStatus, id)
+    }
+
     return (
             <li>
-                <input type="checkbox"/>
+                <input type="checkbox" checked={status} onChange={changeTaskStatusHandler}/>
                 {task}
-                <Button callback={callbackHandler}>x</Button>
+                <Button callback={deleteTaskHandler}>x</Button>
             </li>
     )
 };
