@@ -6,6 +6,7 @@ import IsLoading from "./components/IsLoading";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 import Button from "./button";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const PATH = {
     TODO_APP: '/todo-app',
@@ -185,19 +186,18 @@ const App = () => {
             return null;
         }
     }
-    const updateTaskStatus = async (status, id) => {
-        const newStatus = status===undefined ? null : status
+    const updateTask = async (status, id) => {
         try {
             const airtableData = {
                 fields: {
-                    status: newStatus
+                    status: status
                 }
             }
 
             const response = await fetch(
                 `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/${id}`,
                 {
-                    method: "PUT",
+                    method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -212,20 +212,67 @@ const App = () => {
 
             const data = await response.json();
             console.log(data)
-            const newTasks = tasks.map((t) => {
-               if ( t.taskID === data.id ) {
-                   const newTask = {...t, status: data.fields.status}
-                   return newTask
-               } else return t
-            })
-
-            console.log(newTasks)
+            const newTasks = tasks.map((task) => {
+            if (task.id === id) {
+                const newFields = task
+                    ? { ...task.fields, status: status }
+                    : { ...task.fields, status: null };
+                return { taskID: task.id, fields: newFields };
+            } else {
+                return task;
+            }
+        });
+        setTasks(newTasks)
 
         } catch (error) {
             console.log(error.message);
             return null;
         }
     }
+    /*const updateTask = async (status, id) => {
+    const tableName = 'Task';
+        const newTasks = tasks.map((task) => {
+            if (task.id === id) {
+                const newFields = task
+                    ? { ...task.fields, status: status }
+                    : { ...task.fields, status: null };
+                updateAirtableRecord(task.id, newFields, tableName);
+                return { taskID: task.id, fields: newFields };
+            } else {
+                return task;
+            }
+        });
+        setTasks(newTasks)
+    }*/
+
+    /*const updateAirtableRecord = async (id, airtableData) => {
+        if (typeof airtableData !== 'object') {
+            console.error('Error: Must be an object')
+            return
+        }
+
+        await fetch(
+            `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Table/${id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                },
+                body: JSON.stringify(airtableData),
+            }
+        )
+
+            .then((response) => response.json())
+            .then((result) => {
+                return result;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                throw error;
+            });
+    }
+*/
 
     useEffect(() => {
         getTodo()
@@ -258,23 +305,23 @@ const App = () => {
         setTasks(newTasks);
     }
     const changeTaskStatus = (status, id) => {
-        updateTaskStatus(status, id)
-        const newStatus = status? status : false
+       updateTask(status, id)
+       /* const newStatus = status? status : false
         const newTasks = tasks.map(t=>t.taskID === id ? {...t, status: newStatus} : t)
         console.log(newTasks)
-        setTasks(newTasks)
+        setTasks(newTasks)*/
     }
 
     return <BrowserRouter>
+        <Header/>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
             <Route path={PATH.TODO_APP} element={<>
-                <Link to={PATH.HOME}><Button>Home</Button></Link>
                 <AddItemForm callback={addTodo} placeholder={'New todo...'}/>
                 {isLoading && <IsLoading/>}
                 <TodoList todoList={todoList} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
-                          onAddTask={addTask} onStatusChange={changeTaskStatus}/>
+                          onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
             </>}
             />
             <Route path={PATH.HOME} element={<>
@@ -283,7 +330,9 @@ const App = () => {
             </>
             }
             />
+            <Route path="/*" element={<>Error 404</>} />
         </Routes>
+        <Footer/>
     </BrowserRouter>
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import Button from "../button";
 
-const TaskItem = ({task, onRemoveTask, id, status, onStatusChange}) => {
+const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
     const deleteTaskHandler = () => {
         onRemoveTask(id)
     }
 
     const changeTaskStatusHandler = (e) => {
         const newStatus = e.target.checked
-        onStatusChange(newStatus, id)
+        changeTaskStatus(newStatus, id)
     }
 
     return (
