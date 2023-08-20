@@ -115,6 +115,7 @@ const App = () => {
         }
     }
     const getTasks = async () => {
+        console.log('getTasks rendering')
         const options = {
             method: 'GET',
             headers: {
@@ -176,7 +177,8 @@ const App = () => {
             const newTask = {
                 todoID: data.fields.todo[0],
                 taskID: data.id,
-                title: data.fields.taskTitle
+                title: data.fields.taskTitle,
+                status: null
             }
 
             setTasks([newTask, ...tasks]);
@@ -186,7 +188,7 @@ const App = () => {
             return null;
         }
     }
-    const updateTask = async (status, id) => {
+    const updateTaskStatus = async (status, id) => {
         try {
             const airtableData = {
                 fields: {
@@ -212,67 +214,15 @@ const App = () => {
 
             const data = await response.json();
             console.log(data)
-            const newTasks = tasks.map((task) => {
-            if (task.id === id) {
-                const newFields = task
-                    ? { ...task.fields, status: status }
-                    : { ...task.fields, status: null };
-                return { taskID: task.id, fields: newFields };
-            } else {
-                return task;
-            }
-        });
-        setTasks(newTasks)
+
+            return data ? {...data.fields, status: data.fields.status} : {...data.fields, status: null}
+
 
         } catch (error) {
             console.log(error.message);
             return null;
         }
     }
-    /*const updateTask = async (status, id) => {
-    const tableName = 'Task';
-        const newTasks = tasks.map((task) => {
-            if (task.id === id) {
-                const newFields = task
-                    ? { ...task.fields, status: status }
-                    : { ...task.fields, status: null };
-                updateAirtableRecord(task.id, newFields, tableName);
-                return { taskID: task.id, fields: newFields };
-            } else {
-                return task;
-            }
-        });
-        setTasks(newTasks)
-    }*/
-
-    /*const updateAirtableRecord = async (id, airtableData) => {
-        if (typeof airtableData !== 'object') {
-            console.error('Error: Must be an object')
-            return
-        }
-
-        await fetch(
-            `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Table/${id}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-                },
-                body: JSON.stringify(airtableData),
-            }
-        )
-
-            .then((response) => response.json())
-            .then((result) => {
-                return result;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                throw error;
-            });
-    }
-*/
 
     useEffect(() => {
         getTodo()
@@ -291,13 +241,12 @@ const App = () => {
         setTodoList(newTodolist);
         const newTasks = tasks.map(el => {
             return (
-            el.todoID === id ? deleteItem(el.taskID) : el)
-        } )
+                el.todoID === id ? deleteItem(el.taskID) : el)
+        })
         setTasks(newTasks);
     }
     const addTask = (title, id) => {
         postTask(title, id);
-
     }
     const removeTask = (id) => {
         deleteItem(id)
@@ -305,11 +254,22 @@ const App = () => {
         setTasks(newTasks);
     }
     const changeTaskStatus = (status, id) => {
-       updateTask(status, id)
-       /* const newStatus = status? status : false
-        const newTasks = tasks.map(t=>t.taskID === id ? {...t, status: newStatus} : t)
-        console.log(newTasks)
-        setTasks(newTasks)*/
+        updateTaskStatus(status, id);
+        const newTasks = tasks.map((task) => {
+            if (task.taskID === id) {
+               /* console.log('old status =====', task.status)
+                console.log('new status =====', status)*/
+                return {taskID: task.taskID, ...task, status: status};
+            } else {
+                return task;
+            }
+        });
+
+        setTasks(newTasks)
+
+    }
+    const changeTaskTitle = (title, id) => {
+        //updateTask(title, id)
     }
 
     return <BrowserRouter>
@@ -330,7 +290,7 @@ const App = () => {
             </>
             }
             />
-            <Route path="/*" element={<>Error 404</>} />
+            <Route path="/*" element={<>Error 404</>}/>
         </Routes>
         <Footer/>
     </BrowserRouter>
