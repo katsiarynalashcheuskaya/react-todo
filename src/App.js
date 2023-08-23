@@ -1,12 +1,14 @@
-import './App.css';
+import s from './App.module.css';
 import TodoList from "./components/TodoList";
 import AddItemForm from "./components/AddItemForm";
 import {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
-import Button from "./button";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import main from "./assets/images/main.jpg"
+import start from "./assets/images/start_button.svg"
+import todoApp from "./assets/images/todo-app.svg"
 
 const PATH = {
     TODO_APP: '/todo-app',
@@ -257,8 +259,6 @@ const App = () => {
         updateTaskStatus(status, id);
         const newTasks = tasks.map((task) => {
             if (task.taskID === id) {
-               /* console.log('old status =====', task.status)
-                console.log('new status =====', status)*/
                 return {taskID: task.taskID, ...task, status: status};
             } else {
                 return task;
@@ -276,18 +276,21 @@ const App = () => {
         <Header/>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
-            <Route path={PATH.TODO_APP} element={<>
+            <Route path={PATH.TODO_APP} element={<div className={`${s.appWrapper} ${s.container}` }>
                 <AddItemForm callback={addTodo} placeholder={'New todo...'}/>
                 {isLoading && <IsLoading/>}
                 <TodoList todoList={todoList} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
-            </>}
+            </div>}
             />
-            <Route path={PATH.HOME} element={<>
-                <h1>Todo App</h1>
-                <Link to={PATH.TODO_APP}><Button>Let's start</Button></Link>
-            </>
+            <Route path={PATH.HOME} element={<div className={`${s.homePageWrapper} ${s.container}`}>
+                <img className={s.mainImage} src={main}/>
+                <div>
+                <h1>To Do List App</h1>
+                <Link to={PATH.TODO_APP}><img className={s.startButton} src={start}/></Link>
+                </div>
+            </div>
             }
             />
             <Route path="/*" element={<>Error 404</>}/>
