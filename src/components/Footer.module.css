@@ -1,14 +1,15 @@
 .footer {
     height: 70px;
     background-color: rgba(5, 86, 134, 1);
+    width: 100%;
 }
 
 .footer ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
     width: 100%;
+    height: 100%;
     list-style: none;
 }
 .footer li {

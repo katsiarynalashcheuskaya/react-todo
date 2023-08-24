@@ -276,7 +276,7 @@ const App = () => {
         <Header/>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
-            <Route path={PATH.TODO_APP} element={<div className={`${s.appWrapper} ${s.container}` }>
+            <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}` }>
                 <AddItemForm callback={addTodo} placeholder={'New todo...'}/>
                 {isLoading && <IsLoading/>}
                 <TodoList todoList={todoList} tasks={tasks}
@@ -286,7 +286,7 @@ const App = () => {
             />
             <Route path={PATH.HOME} element={<div className={`${s.homePageWrapper} ${s.container}`}>
                 <img className={s.mainImage} src={main}/>
-                <div>
+                <div className={s.titleAndButtonWrapper}>
                 <h1>To Do List App</h1>
                 <Link to={PATH.TODO_APP}><img className={s.startButton} src={start}/></Link>
                 </div>
