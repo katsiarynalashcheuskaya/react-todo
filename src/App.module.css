@@ -6,9 +6,6 @@
     margin: 0 auto;
 }
 
-.appWrapper {
-}
-
 .todoWrapper {
     padding: 100px 0;
 }
@@ -51,7 +48,7 @@ h1 {
     justify-content: left;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 760px) {
     h1 {
         font-size: 62px;
     }
@@ -65,3 +62,16 @@ h1 {
     }
 }
 
+@media (max-width: 370px) {
+    h1 {
+        font-size: 58px;
+    }
+    .startButton {
+        width: 200px;
+        margin-top: 0;
+        margin-left: 10px;
+    }
+    .mainImage {
+        width: 360px;
+    }
+}
