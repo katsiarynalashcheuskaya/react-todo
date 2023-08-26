@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 
-const ReusableInput = ({value, onChange, children, placeholder}) => {
+const ReusableInput = ({value, onChange, children, placeholder, className}) => {
     const inputRef = useRef();
     useEffect(() => {
         //inputRef.current.focus()
@@ -9,6 +9,7 @@ const ReusableInput = ({value, onChange, children, placeholder}) => {
         <>
             <label htmlFor='itemTitle'>{children}</label>
             <input id='itemTitle'
+                   className={className}
                    name='title'
                    ref={inputRef}
                    value={value}

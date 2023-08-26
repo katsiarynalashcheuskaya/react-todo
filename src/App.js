@@ -8,12 +8,13 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import main from "./assets/images/main.jpg"
 import start from "./assets/images/start_button.svg"
-import todoApp from "./assets/images/todo-app.svg"
 
 const PATH = {
     TODO_APP: '/todo-app',
     HOME: '/home',
 }
+
+//export const FilterValuesType = "All" | "Active" | "Completed";
 
 const App = () => {
     const [todoList, setTodoList] = useState([]);
@@ -268,31 +269,29 @@ const App = () => {
         setTasks(newTasks)
 
     }
-    const changeTaskTitle = (title, id) => {
+
+    /*const changeTaskTitle = (title, id) => {
         //updateTask(title, id)
-    }
+    }*/
 
     return <BrowserRouter>
         <Header/>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
-            <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}` }>
-                <AddItemForm callback={addTodo} placeholder={'New todo...'}/>
+            <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
+                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"Add"}/>
                 {isLoading && <IsLoading/>}
                 <TodoList todoList={todoList} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
-            </div>}
-            />
+            </div>}/>
             <Route path={PATH.HOME} element={<div className={`${s.homePageWrapper} ${s.container}`}>
                 <img className={s.mainImage} src={main}/>
                 <div className={s.titleAndButtonWrapper}>
                 <h1>To Do List App</h1>
                 <Link to={PATH.TODO_APP}><img className={s.startButton} src={start}/></Link>
                 </div>
-            </div>
-            }
-            />
+            </div>}/>
             <Route path="/*" element={<>Error 404</>}/>
         </Routes>
         <Footer/>

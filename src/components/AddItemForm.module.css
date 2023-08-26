@@ -1,0 +1,20 @@
+.inputClass {
+    width: 360px;
+    height: 48px;
+}
+
+form button {
+    margin-left: 8px;
+    width: 64px;
+    height: 48px;
+    font-weight: 600;
+    background: #FF8040;
+    border: none;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+form button:hover {
+    opacity: 70%;
+}
+
