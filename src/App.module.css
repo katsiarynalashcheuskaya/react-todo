@@ -7,7 +7,17 @@
 }
 
 .todoWrapper {
-    padding: 100px 0;
+    padding: 70px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrap {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .homePageWrapper {
@@ -19,11 +29,11 @@
 }
 
 .mainImage {
-    width: 651px;
+    width: 450px;
 }
 
 .startButton {
-    margin-left: 20px;
+    margin-left: 12px;
     margin-top: 10px;
 }
 
@@ -33,7 +43,7 @@
 
 h1 {
     font-weight: 400;
-    font-size: 96px;
+    font-size: 92px;
     line-height: 52px;
     color: rgba(255, 128, 64, 1);
     text-align: center;
@@ -49,29 +59,38 @@ h1 {
 }
 
 @media (max-width: 760px) {
+    .todoWrapper, .homePageWrapper {
+        padding: 40px 0;
+    }
+
     h1 {
         font-size: 62px;
+        margin-top: 20px;
     }
+
     .startButton {
         width: 210px;
         margin-top: 0;
         margin-left: 10px;
     }
+
     .mainImage {
         width: 380px;
     }
 }
 
-@media (max-width: 370px) {
+@media (max-width: 400px) {
     h1 {
         font-size: 58px;
     }
+
     .startButton {
         width: 200px;
         margin-top: 0;
         margin-left: 10px;
     }
+
     .mainImage {
-        width: 360px;
+        width: 300px;
     }
 }

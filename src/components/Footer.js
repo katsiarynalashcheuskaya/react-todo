@@ -9,8 +9,7 @@ const Footer = () => {
     const thisYear = today.getFullYear();
     return (
         <div className={s.footer}>
-            <div className={c.container}>
-        <ul>
+        <ul className={c.container}>
             <li>
                 <a
                     href="https://github.com/katsiarynalashcheuskaya"
@@ -35,7 +34,6 @@ const Footer = () => {
                 </li>
         </ul>
             </div>
-        </div>
     );
 };
 

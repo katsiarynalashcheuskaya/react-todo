@@ -276,6 +276,7 @@ const App = () => {
 
     return <BrowserRouter>
         <Header/>
+        <div className={`${s.wrap}`}>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
             <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
@@ -294,6 +295,7 @@ const App = () => {
             </div>}/>
             <Route path="/*" element={<>Error 404</>}/>
         </Routes>
+        </div>
         <Footer/>
     </BrowserRouter>
 }
