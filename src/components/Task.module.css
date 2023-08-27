@@ -1,0 +1,25 @@
+.tasksList {
+    list-style: none;
+    margin-top: 5px;
+}
+
+button {
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    color: #646464;
+    cursor: pointer;
+    padding: 5px;
+}
+
+form button:hover {
+    opacity: 70%;
+}
+
+.inputClass {
+    width: 130px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px solid #E7E7E7;
+}

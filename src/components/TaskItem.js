@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from "../button";
+import deleteIcon from "../assets/images/delete-icon.svg"
 
 const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
     const deleteTaskHandler = () => {
@@ -14,7 +15,7 @@ const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
             <li>
                 <input type="checkbox" checked={status ? status : ''} onChange={changeTaskStatusHandler}/>
                 {task}
-                <Button callback={deleteTaskHandler}>x</Button>
+                <Button callback={deleteTaskHandler}><img src={deleteIcon}/></Button>
             </li>
     )
 };

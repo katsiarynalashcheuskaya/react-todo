@@ -3,7 +3,7 @@ import ReusableInput from "./ReusableInput";
 import s from "./AddItemForm.module.css"
 
 
-const AddItemForm = React.memo(({callback, placeholder, id, buttonTitle}) => {
+const AddItemForm = React.memo(({callback, placeholder, id, buttonTitle, inputClass}) => {
     const [title, setTitle] = useState('');
     const handleAddItem = (e) => {
         e.preventDefault();
@@ -16,7 +16,7 @@ const AddItemForm = React.memo(({callback, placeholder, id, buttonTitle}) => {
     }
     return (
         <form onSubmit={handleAddItem}>
-            <ReusableInput className={s.inputClass} value={title} onChange={handleTitleChange} placeholder={placeholder}></ReusableInput>
+            <ReusableInput className={inputClass} value={title} onChange={handleTitleChange} placeholder={placeholder}></ReusableInput>
             <button>{buttonTitle}</button>
         </form>
     )

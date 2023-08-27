@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TodoListItem from "./TodoListItem";
 import s from "./TodoList.module.css"
+import {useLocation} from "react-router-dom";
+
 
 const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
+    const location = useLocation();
+    useEffect(() => {
+        if (location.pathname === "todo-app") {
+            document.getElementById("app").style.backgroundColor = "#F5F5F5FF";
+            document.getElementById("app").style.justifyContent = "initial";
+        }
+    }, [location.pathname]);
     return (
         <ul className={s.todoCardsWrapper}>
             {todoList.map(t => {

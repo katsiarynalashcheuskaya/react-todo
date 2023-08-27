@@ -1,9 +1,15 @@
 .todoCardsWrapper {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 18px;
     list-style: none;
 }
+
+@media (max-width: 760px) {
+    .todoCardsWrapper {
+        justify-content: center;
+    }
+}
+
 

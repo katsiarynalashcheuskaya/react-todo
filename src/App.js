@@ -1,9 +1,9 @@
 import s from './App.module.css';
 import TodoList from "./components/TodoList";
 import AddItemForm from "./components/AddItemForm";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
-import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Link, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import main from "./assets/images/main.jpg"
@@ -216,7 +216,6 @@ const App = () => {
             }
 
             const data = await response.json();
-            console.log(data)
 
             return data ? {...data.fields, status: data.fields.status} : {...data.fields, status: null}
 
@@ -267,12 +266,11 @@ const App = () => {
         });
 
         setTasks(newTasks)
-
     }
 
     /*const changeTaskTitle = (title, id) => {
-        //updateTask(title, id)
-    }*/
+       //updateTask(title, id)
+   }*/
 
     return <BrowserRouter>
         <Header/>
@@ -280,17 +278,22 @@ const App = () => {
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
             <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
-                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"Add"}/>
+                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} inputClass={s.inputClass}/>
                 {isLoading && <IsLoading/>}
+                {todoList.length === 0 && !isLoading && (
+                    <p>You don't have any todo lists yet.</p>
+                )}
+                {todoList.length > 0 && (
                 <TodoList todoList={todoList} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
+                )}
             </div>}/>
             <Route path={PATH.HOME} element={<div className={`${s.homePageWrapper} ${s.container}`}>
                 <img className={s.mainImage} src={main}/>
                 <div className={s.titleAndButtonWrapper}>
                 <h1>To Do List App</h1>
-                <Link to={PATH.TODO_APP} onClick={()=>{document.getElementById("app").style.backgroundColor="#F5F5F5FF"}}><img className={s.startButton} src={start}/></Link>
+                <Link to={PATH.TODO_APP}><img className={s.startButton} src={start}/></Link>
                 </div>
             </div>}/>
             <Route path="/*" element={<>Error 404</>}/>
