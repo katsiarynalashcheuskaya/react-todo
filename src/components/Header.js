@@ -11,7 +11,7 @@ const Header = () => {
             <div className={c.container}>
                 <div className={s.headerWrap}>
             <img className={s.logo} src={logo}/>
-            <Link to={"/home"}><img className={s.homeIcon} src={home}/></Link>
+            <Link to={"/home"} onClick={()=>{document.getElementById("app").style.backgroundColor="#FFFFFF"}}><img className={s.homeIcon} src={home}/></Link>
             </div>
             </div>
         </div>

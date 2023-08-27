@@ -276,7 +276,7 @@ const App = () => {
 
     return <BrowserRouter>
         <Header/>
-        <div className={`${s.wrap}`}>
+        <div id="app" className={s.wrap}>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
             <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
@@ -290,7 +290,7 @@ const App = () => {
                 <img className={s.mainImage} src={main}/>
                 <div className={s.titleAndButtonWrapper}>
                 <h1>To Do List App</h1>
-                <Link to={PATH.TODO_APP}><img className={s.startButton} src={start}/></Link>
+                <Link to={PATH.TODO_APP} onClick={()=>{document.getElementById("app").style.backgroundColor="#F5F5F5FF"}}><img className={s.startButton} src={start}/></Link>
                 </div>
             </div>}/>
             <Route path="/*" element={<>Error 404</>}/>
