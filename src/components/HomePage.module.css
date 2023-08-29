@@ -1,0 +1,74 @@
+.homePageWrapper {
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainImage {
+    width: 450px;
+}
+
+.startButton {
+    margin-left: 12px;
+    margin-top: 10px;
+}
+
+.startButton:hover {
+    opacity: 60%;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 92px;
+    line-height: 52px;
+    color: rgba(255, 128, 64, 1);
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    font-family: 'Sue Ellen Francisco', cursive;
+}
+
+.titleAndButtonWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+@media (max-width: 760px) {
+    .homePageWrapper {
+        padding: 40px 0;
+    }
+
+    h1 {
+        font-size: 62px;
+        margin-top: 20px;
+    }
+
+    .startButton {
+        width: 210px;
+        margin-top: 0;
+        margin-left: 10px;
+    }
+
+    .mainImage {
+        width: 380px;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 58px;
+    }
+
+    .startButton {
+        width: 200px;
+        margin-top: 0;
+        margin-left: 10px;
+    }
+
+    .mainImage {
+        width: 300px;
+    }
+}
