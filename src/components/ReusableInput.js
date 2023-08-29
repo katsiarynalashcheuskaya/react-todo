@@ -1,10 +1,8 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 
-const ReusableInput = ({value, onChange, children, placeholder}) => {
+const ReusableInput = ({value, onChange, children, placeholder, maxLengthValue}) => {
     const inputRef = useRef();
-    useEffect(() => {
-        //inputRef.current.focus()
-    })
+
     return (
         <>
             <label htmlFor='itemTitle'>{children}</label>
@@ -13,6 +11,7 @@ const ReusableInput = ({value, onChange, children, placeholder}) => {
                    ref={inputRef}
                    value={value}
                    onChange={onChange}
+                   maxLength={maxLengthValue}
                    placeholder={placeholder}></input>
         </>
     );

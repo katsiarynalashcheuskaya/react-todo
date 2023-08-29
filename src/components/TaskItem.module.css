@@ -1,0 +1,9 @@
+.taskTitle {
+    padding: 0 5px;
+}
+
+.taskWrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}

@@ -1,17 +1,20 @@
-import './App.css';
+import s from './App.module.css';
 import TodoList from "./components/TodoList";
 import AddItemForm from "./components/AddItemForm";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
-import Button from "./button";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import main from "./assets/images/main.jpg"
+import start from "./assets/images/start_button.svg"
 
 const PATH = {
     TODO_APP: '/todo-app',
     HOME: '/home',
 }
+
+//export const FilterValuesType = "All" | "Active" | "Done";
 
 const App = () => {
     const [todoList, setTodoList] = useState([]);
@@ -115,7 +118,7 @@ const App = () => {
         }
     }
     const getTasks = async () => {
-        console.log('getTasks rendering')
+       /* console.log('getTasks rendering')*/
         const options = {
             method: 'GET',
             headers: {
@@ -213,7 +216,6 @@ const App = () => {
             }
 
             const data = await response.json();
-            console.log(data)
 
             return data ? {...data.fields, status: data.fields.status} : {...data.fields, status: null}
 
@@ -257,8 +259,6 @@ const App = () => {
         updateTaskStatus(status, id);
         const newTasks = tasks.map((task) => {
             if (task.taskID === id) {
-               /* console.log('old status =====', task.status)
-                console.log('new status =====', status)*/
                 return {taskID: task.taskID, ...task, status: status};
             } else {
                 return task;
@@ -266,32 +266,39 @@ const App = () => {
         });
 
         setTasks(newTasks)
+    }
 
-    }
-    const changeTaskTitle = (title, id) => {
-        //updateTask(title, id)
-    }
+    /*const changeTaskTitle = (title, id) => {
+       //updateTask(title, id)
+   }*/
 
     return <BrowserRouter>
         <Header/>
+        <div id="app" className={s.wrap}>
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
-            <Route path={PATH.TODO_APP} element={<>
-                <AddItemForm callback={addTodo} placeholder={'New todo...'}/>
+            <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
+                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
                 {isLoading && <IsLoading/>}
+                {todoList.length === 0 && !isLoading && (
+                    <p>You don't have any todo lists yet.</p>
+                )}
+                {todoList.length > 0 && (
                 <TodoList todoList={todoList} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
-            </>}
-            />
-            <Route path={PATH.HOME} element={<>
-                <h1>Todo App</h1>
-                <Link to={PATH.TODO_APP}><Button>Let's start</Button></Link>
-            </>
-            }
-            />
+                )}
+            </div>}/>
+            <Route path={PATH.HOME} element={<div className={`${s.homePageWrapper} ${s.container}`}>
+                <img className={s.mainImage} src={main}/>
+                <div className={s.titleAndButtonWrapper}>
+                <h1>To Do List App</h1>
+                <Link to={PATH.TODO_APP}><img className={s.startButton} src={start}/></Link>
+                </div>
+            </div>}/>
             <Route path="/*" element={<>Error 404</>}/>
         </Routes>
+        </div>
         <Footer/>
     </BrowserRouter>
 }

@@ -1,0 +1,23 @@
+.header {
+    height: 70px;
+    background-color: rgba(5, 86, 134, 1);
+    width: 100%;
+}
+
+.headerWrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.homeIcon {
+    width: 25px;
+    height: 25px;
+}
+
+.logo {
+    width: 150px;
+}
+
