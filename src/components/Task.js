@@ -7,7 +7,7 @@ const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus}) => {
     let tasksForTodolist  = tasks.filter(t => t.todoID === id);
     return (
         <ul className={s.tasksWrapper}>
-            <AddItemForm callback={onAddTask} id={id} placeholder={'New task...'} buttonTitle={"+"} className={s.inputClass}/>
+            <AddItemForm callback={onAddTask} id={id} placeholder={'New task...'} buttonTitle={"+"} maxLengthValue={"40"}/>
             {tasksForTodolist.length === 0 && (
                 <div className={s.emptyTasks}>
                     <p>You don't have any tasks yet.</p>

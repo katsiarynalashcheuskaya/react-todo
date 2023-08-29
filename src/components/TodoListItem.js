@@ -17,11 +17,11 @@ const TodoListItem = ({todo, onRemoveTodo, id, tasks, onRemoveTask, onAddTask, c
                 </div>
                 <Task tasks={tasks} id={id} onRemoveTask={onRemoveTask} onAddTask={onAddTask} changeTaskStatus={changeTaskStatus}/>
             </li>
-            <div className={s.filterWrapper}>
+            {/*<div className={s.filterWrapper}>
             <div>All</div>
             <div>Active</div>
             <div>Done</div>
-            </div>
+            </div>*/}
         </div>
     )
 };

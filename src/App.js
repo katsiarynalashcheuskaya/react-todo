@@ -118,7 +118,7 @@ const App = () => {
         }
     }
     const getTasks = async () => {
-        console.log('getTasks rendering')
+       /* console.log('getTasks rendering')*/
         const options = {
             method: 'GET',
             headers: {
@@ -278,7 +278,7 @@ const App = () => {
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
             <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
-                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"}/>
+                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
                 {isLoading && <IsLoading/>}
                 {todoList.length === 0 && !isLoading && (
                     <p>You don't have any todo lists yet.</p>

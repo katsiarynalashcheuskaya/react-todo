@@ -9,6 +9,11 @@
     height: 30px;
     border-radius: 5px;
     border: 2px solid #E7E7E7;
+    padding-left: 5px;
+}
+
+.tasksWrapper form input::placeholder {
+    margin-left: 5px;
 }
 
 .tasksWrapper form button {
