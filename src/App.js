@@ -3,7 +3,7 @@ import TodoList from "./components/TodoList";
 import AddItemForm from "./components/AddItemForm";
 import React, {useEffect, useState} from "react";
 import IsLoading from "./components/IsLoading";
-import {BrowserRouter, Link, Navigate, Route, Routes, useLocation} from "react-router-dom";
+import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import main from "./assets/images/main.jpg"
@@ -14,7 +14,7 @@ const PATH = {
     HOME: '/home',
 }
 
-//export const FilterValuesType = "All" | "Active" | "Completed";
+//export const FilterValuesType = "All" | "Active" | "Done";
 
 const App = () => {
     const [todoList, setTodoList] = useState([]);
@@ -278,7 +278,7 @@ const App = () => {
         <Routes>
             <Route path={'/'} element={<Navigate to={PATH.HOME}/>}/>
             <Route path={PATH.TODO_APP} element={<div className={`${s.todoWrapper} ${s.container}`}>
-                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} inputClass={s.inputClass}/>
+                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"}/>
                 {isLoading && <IsLoading/>}
                 {todoList.length === 0 && !isLoading && (
                     <p>You don't have any todo lists yet.</p>

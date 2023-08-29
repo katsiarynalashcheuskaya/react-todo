@@ -3,23 +3,20 @@
     margin-top: 5px;
 }
 
-button {
-    font-weight: 600;
-    background: transparent;
-    border: none;
-    border-radius: 5px;
-    color: #646464;
-    cursor: pointer;
-    padding: 5px;
-}
-
-form button:hover {
-    opacity: 70%;
-}
-
-.inputClass {
-    width: 130px;
+.tasksWrapper form input {
+    min-width: 130px;
+    width: 100%;
     height: 30px;
     border-radius: 5px;
     border: 2px solid #E7E7E7;
+}
+
+.tasksWrapper form button {
+    width: 40px;
+    height: 30px;
+    margin-left: 5px;
+}
+
+.emptyTasks {
+    text-align: center;
 }

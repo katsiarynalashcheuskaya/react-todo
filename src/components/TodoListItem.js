@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from "../button";
+import Button from "../Button";
 import Task from "./Task";
-import s from "./TodoItem.module.css"
+import s from "./TodoListItem.module.css"
 import deleteIcon from "../assets/images/delete-icon.svg";
 
 const TodoListItem = ({todo, onRemoveTodo, id, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
@@ -17,6 +17,11 @@ const TodoListItem = ({todo, onRemoveTodo, id, tasks, onRemoveTask, onAddTask, c
                 </div>
                 <Task tasks={tasks} id={id} onRemoveTask={onRemoveTask} onAddTask={onAddTask} changeTaskStatus={changeTaskStatus}/>
             </li>
+            <div className={s.filterWrapper}>
+            <div>All</div>
+            <div>Active</div>
+            <div>Done</div>
+            </div>
         </div>
     )
 };

@@ -6,10 +6,4 @@
     list-style: none;
 }
 
-@media (max-width: 760px) {
-    .todoCardsWrapper {
-        justify-content: center;
-    }
-}
-
 

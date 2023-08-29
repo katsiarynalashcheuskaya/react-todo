@@ -1,8 +1,9 @@
 import React from 'react';
+import s from "./Button.module.css"
 
 const Button = ({callback, children}) => {
     return (
-       <button onClick={callback}>{children}</button>
+       <button className={s.button} onClick={callback}>{children}</button>
     );
 };
 

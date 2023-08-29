@@ -9,10 +9,11 @@
     justify-content: space-between;
 }
 
-.todoCardWrapper img {
-    width: 12px;
-    height: 12px;
+.titleAndButtonWrapper img {
+    width: 14px;
+    height: 14px;
 }
+
 .todoCardWrapper {
     background: #FFFFFF;
     border: 2px solid #E7E7E7;
@@ -22,11 +23,31 @@
     display: flex;
     flex-direction: column;
     list-style: none;
+    position: relative;
 
 /*ТЕНЬ*/
 }
 
-@media (max-width: 557px) {
+.filterWrapper {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    justify-content: center;
+    bottom: -2px;
+    left: 0;
+}
+
+.filterWrapper div {
+    min-width: 76px;
+    border-radius: 5px;
+    border: 2px solid #E7E7E7;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@media (max-width: 573px) {
     .todoCardWrapper {
         min-width: 230px;
         width: 100%;

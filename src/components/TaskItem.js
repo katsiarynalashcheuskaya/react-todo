@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from "../button";
+import Button from "../Button";
 import deleteIcon from "../assets/images/delete-icon.svg"
+import s from "./TaskItem.module.css"
 
 const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
     const deleteTaskHandler = () => {
@@ -12,9 +13,9 @@ const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
     }
 
     return (
-            <li>
+            <li className={s.taskWrapper}>
                 <input type="checkbox" checked={status ? status : ''} onChange={changeTaskStatusHandler}/>
-                {task}
+                <div className={s.taskTitle}>{task}</div>
                 <Button callback={deleteTaskHandler}><img src={deleteIcon}/></Button>
             </li>
     )

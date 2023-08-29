@@ -18,9 +18,3 @@ form {
     width: 100%;
     display: flex;
 }
-
-@media (max-width: 760px) {
-    form {
-justify-content: center;
-    }
-}

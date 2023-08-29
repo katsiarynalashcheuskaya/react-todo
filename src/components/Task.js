@@ -6,10 +6,12 @@ import s from "./Task.module.css"
 const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus}) => {
     let tasksForTodolist  = tasks.filter(t => t.todoID === id);
     return (
-        <ul>
-            <AddItemForm callback={onAddTask} id={id} placeholder={'New task...'} buttonTitle={"+"} inputClass={s.inputClass}/>
+        <ul className={s.tasksWrapper}>
+            <AddItemForm callback={onAddTask} id={id} placeholder={'New task...'} buttonTitle={"+"} className={s.inputClass}/>
             {tasksForTodolist.length === 0 && (
+                <div className={s.emptyTasks}>
                     <p>You don't have any tasks yet.</p>
+                </div>
             )}
             {tasksForTodolist.length > 0 && (
             <div className={s.tasksList}>

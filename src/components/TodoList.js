@@ -7,7 +7,7 @@ import {useLocation} from "react-router-dom";
 const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
     const location = useLocation();
     useEffect(() => {
-        if (location.pathname === "todo-app") {
+        if (location.pathname === "/todo-app") {
             document.getElementById("app").style.backgroundColor = "#F5F5F5FF";
             document.getElementById("app").style.justifyContent = "initial";
         }
