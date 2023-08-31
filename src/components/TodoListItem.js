@@ -3,6 +3,7 @@ import Button from "../Button";
 import Task from "./Task";
 import s from "./TodoListItem.module.css"
 import deleteIcon from "../assets/images/delete-icon.svg";
+import PropTypes from "prop-types";
 
 const TodoListItem = ({todo, onRemoveTodo, id, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
     const callbackHandler = () => {
@@ -25,5 +26,15 @@ const TodoListItem = ({todo, onRemoveTodo, id, tasks, onRemoveTask, onAddTask, c
         </div>
     )
 };
+
+TodoListItem.propTypes = {
+    todo: PropTypes.string,
+    onRemoveTodo: PropTypes.func,
+    id: PropTypes.string,
+    tasks: PropTypes.array,
+    onRemoveTask: PropTypes.func,
+    onAddTask: PropTypes.func,
+    changeTaskStatus: PropTypes.func
+}
 
 export default TodoListItem;

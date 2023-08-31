@@ -1,5 +1,6 @@
 import React from 'react';
 import s from "./Button.module.css"
+import PropTypes from "prop-types";
 
 const Button = ({callback, children}) => {
     return (
@@ -7,4 +8,8 @@ const Button = ({callback, children}) => {
     );
 };
 
+Button.propTypes = {
+    callback: PropTypes.func,
+    children: PropTypes.object
+}
 export default Button;
