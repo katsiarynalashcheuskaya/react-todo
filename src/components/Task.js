@@ -2,6 +2,7 @@ import React from 'react';
 import TaskItem from "./TaskItem";
 import AddItemForm from "./AddItemForm";
 import s from "./Task.module.css"
+import PropTypes from "prop-types";
 
 const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus}) => {
     let tasksForTodolist  = tasks.filter(t => t.todoID === id);
@@ -23,5 +24,14 @@ const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus}) => {
 
     )
 };
+
+
+Task.propTypes = {
+    id: PropTypes.string,
+    tasks: PropTypes.array,
+    onRemoveTask: PropTypes.func,
+    onAddTask: PropTypes.func,
+    changeTaskStatus: PropTypes.func
+}
 
 export default Task;

@@ -2,6 +2,7 @@ import React from 'react';
 import Button from "../Button";
 import deleteIcon from "../assets/images/delete-icon.svg"
 import s from "./TaskItem.module.css"
+import PropTypes from "prop-types";
 
 const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
     const deleteTaskHandler = () => {
@@ -20,5 +21,14 @@ const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus}) => {
             </li>
     )
 };
+
+
+TaskItem.propTypes = {
+    id: PropTypes.string,
+    task: PropTypes.string,
+    status: PropTypes.bool,
+    onRemoveTask: PropTypes.func,
+    changeTaskStatus: PropTypes.func
+}
 
 export default TaskItem;

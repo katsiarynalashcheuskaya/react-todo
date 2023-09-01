@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ReusableInput from "./ReusableInput";
 import s from "./AddItemForm.module.css"
+import PropTypes from "prop-types";
 
 
 const AddItemForm = React.memo(({callback, placeholder, id, buttonTitle, maxLengthValue}) => {
@@ -21,5 +22,13 @@ const AddItemForm = React.memo(({callback, placeholder, id, buttonTitle, maxLeng
         </form>
     )
 })
+
+AddItemForm.propTypes = {
+    callback: PropTypes.func,
+    placeholder: PropTypes.string,
+    id: PropTypes.string,
+    buttonTitle: PropTypes.string,
+    maxLengthValue: PropTypes.string
+};
 
 export default AddItemForm;
