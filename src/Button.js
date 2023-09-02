@@ -8,8 +8,8 @@ const Button = ({callback, children}) => {
     );
 };
 
-Button.propTypes = {
+/*Button.propTypes = {
     callback: PropTypes.func,
-    children: PropTypes.object
-}
+    children: PropTypes.string
+}*/
 export default Button;

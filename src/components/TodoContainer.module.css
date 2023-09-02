@@ -20,6 +20,10 @@ form input {
     padding-left: 10px;
 }
 
+form input::placeholder {
+    font-family: 'Inter', sans-serif;
+}
+
 @media (max-width: 760px) {
     .todoWrapper {
         padding: 40px 40px;

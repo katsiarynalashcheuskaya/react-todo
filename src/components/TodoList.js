@@ -16,7 +16,7 @@ const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, chang
     return (
         <ul className={s.todoCardsWrapper}>
             {todoList.map(t => {
-                return <TodoListItem key={t.id} id={t.id} todo={t.title}
+                return <TodoListItem key={t.id} id={t.id} todo={t.title} date={t.createdDate}
                                      tasks={tasks} onRemoveTodo={onRemoveTodo} onRemoveTask={onRemoveTask}
                                      onAddTask={onAddTask} changeTaskStatus={changeTaskStatus}/>
             })
