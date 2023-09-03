@@ -22,6 +22,11 @@ form input {
 
 form input::placeholder {
     font-family: 'Inter', sans-serif;
+    color: #000000;
+}
+
+form input:focus {
+    border: 2px solid #FF8040;
 }
 
 @media (max-width: 760px) {

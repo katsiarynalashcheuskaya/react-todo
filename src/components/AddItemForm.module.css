@@ -19,4 +19,8 @@ form {
     display: flex;
 }
 
+form input:focus {
+    outline-color: #FF8040;
+}
+
 

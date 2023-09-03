@@ -121,6 +121,7 @@ const TodoContainer = () => {
             }
             return 0;
         }
+
         setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
     };
     const onSortByTitleDes = () => {
@@ -133,18 +134,21 @@ const TodoContainer = () => {
             }
             return 0;
         }
+
         setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
     };
     const onSortByDateAsc = () => {
         function sortData(a, b) {
             return new Date(b.createdDate) - new Date(a.createdDate);
         }
+
         setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
     };
     const onSortByDateDesc = () => {
         function sortData(a, b) {
             return new Date(a.createdDate) - new Date(b.createdDate);
         }
+
         setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
     };
     const sortList = (sortDirection) => {
@@ -381,7 +385,7 @@ const TodoContainer = () => {
                 setIsLoading(false)
             });
         getTasks();
-    }, [])
+    }, [sortDirection])
 
     const addTodo = (title) => {
         postTodo(title);
@@ -424,7 +428,7 @@ const TodoContainer = () => {
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
             <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
-            <Sort sortData={sortList} sortDirection={sortDirection}/>
+            <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
             {isLoading && <IsLoading/>}
             {todoList.length === 0 && !isLoading && (
                 <p>You don't have any todo lists yet.</p>

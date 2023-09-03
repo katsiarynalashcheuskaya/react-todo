@@ -2,4 +2,9 @@
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
+    width: 300px;
+    border-radius: 5px;
+    border: 2px solid #E7E7E7;
+    padding-left: 10px;
+    font-family: 'Inter', sans-serif;
 }

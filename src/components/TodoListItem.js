@@ -6,6 +6,17 @@ import deleteIcon from "../assets/images/delete-icon.svg";
 import PropTypes from "prop-types";
 
 const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
+    let createdDate = new Date(date)
+    let year = createdDate.getFullYear();
+    let month = createdDate.getMonth()+1;
+    let dt = createdDate.getDate();
+    if (dt < 10) {
+        dt = '0' + dt;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+
     const callbackHandler = () => {
         onRemoveTodo(id)
     }
@@ -15,7 +26,7 @@ const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddT
                 <div className={s.titleAndButtonWrapper}>
                     <div className={s.titleAndDateWrapper}>
                     <h2 className={s.todoTitle}>{todo}</h2>
-                    <span className={s.date}>created {date}</span>
+                    <span className={s.date}>created {`${month}.${dt}.${year}`}</span>
                     </div>
                     <Button callback={callbackHandler}><img src={deleteIcon}/></Button>
                 </div>
