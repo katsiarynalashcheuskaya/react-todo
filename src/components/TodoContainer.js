@@ -5,6 +5,7 @@ import AddItemForm from "./AddItemForm";
 import IsLoading from "./IsLoading";
 import TodoList from "./TodoList";
 import Sort from "./Sort";
+import Search from "./Search";
 
 const TodoContainer = () => {
     const [todoList, setTodoList] = useState([]);
@@ -428,6 +429,7 @@ const TodoContainer = () => {
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
             <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
+           <Search/>
             <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
             {isLoading && <IsLoading/>}
             {todoList.length === 0 && !isLoading && (
