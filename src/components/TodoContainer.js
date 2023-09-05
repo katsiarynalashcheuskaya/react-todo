@@ -12,7 +12,7 @@ const TodoContainer = () => {
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortDirection, setSortDirection] = useState(localStorage.getItem("sortDirection"));
-
+    const [searchInput, setSearchInput] = useState("");
     /* const getTodo = async () => {
          const options = {
              method: 'GET',
@@ -422,21 +422,33 @@ const TodoContainer = () => {
         setTasks(newTasks)
     }
 
+    const handleSearch = (inputValue) => {
+        setSearchInput(inputValue);
+    };
+
+    const filterListTitles = (todoList, searchInput) => {
+        return todoList.filter(
+            (todo) =>
+                todo.title &&
+                todo.title.toLowerCase().includes(searchInput.toLowerCase())
+        );
+    };
+
     /*const changeTaskTitle = (title, id) => {
        //updateTask(title, id)
    }*/
 
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
+            <Search onSearch={handleSearch}/>
             <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
-           <Search/>
             <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
             {isLoading && <IsLoading/>}
             {todoList.length === 0 && !isLoading && (
                 <p>You don't have any todo lists yet.</p>
             )}
             {todoList.length > 0 && (
-                <TodoList todoList={todoList} tasks={tasks}
+                <TodoList todoList={filterListTitles(todoList, searchInput)} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
             )}
