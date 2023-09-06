@@ -137,7 +137,7 @@ const TodoContainer = () => {
             const newTodo = {
                 id: data.id,
                 title: data.fields.title,
-                createdDate: data.fields.date
+                createdTime: data.createdTime
             }
 
             setTodoList([newTodo, ...todoList]);
