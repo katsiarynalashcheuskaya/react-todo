@@ -13,103 +13,6 @@ const TodoContainer = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [sortDirection, setSortDirection] = useState(localStorage.getItem("sortDirection"));
     const [searchInput, setSearchInput] = useState("");
-    /* const getTodo = async () => {
-         const options = {
-             method: 'GET',
-             headers: {
-                 Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
-             }
-         }
-         const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`
-         try {
-             const response = await fetch(url, options);
-
-             if (!response.ok) {
-                 throw new Error(`Error: ${response.status}`);
-             }
-
-             const data = await response.json();
-
-             const todos = data.records.map((todo) => {
-                 return {
-                     id: todo.id,
-                     title: todo.fields.title
-                 }
-             });
-
-             setTodoList(todos);
-
-
-         } catch (error) {
-             console.log(error.message)
-         }
-     }*/
-
-    /*Sort by Airtable view order*/
-    /*const getTodo = async () => {
-        const options = {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
-            }
-        }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}?view=Grid%20view`
-        try {
-            const response = await fetch(url, options);
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            const todos = data.records.map((todo) => {
-                return {
-                    id: todo.id,
-                    title: todo.fields.title
-                }
-            });
-
-            setTodoList(todos);
-
-
-        } catch (error) {
-            console.log(error.message)
-        }
-    }*/
-
-    /*Sort by Airtable field*/
-    /*const getTodo = async () => {
-        const options = {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
-            }
-        }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}?sort[0][field]=title&sort[0][direction]=asc`
-        try {
-            const response = await fetch(url, options);
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            const todos = data.records.map((todo) => {
-                return {
-                    id: todo.id,
-                    title: todo.fields.title
-                }
-            });
-
-            setTodoList(todos);
-
-
-        } catch (error) {
-            console.log(error.message)
-        }
-    }*/
 
     /*Sort with JavaScript*/
     const onSortByTitleAsc = () => {
@@ -140,14 +43,14 @@ const TodoContainer = () => {
     };
     const onSortByDateAsc = () => {
         function sortData(a, b) {
-            return new Date(b.createdDate) - new Date(a.createdDate);
+            return new Date(b.createdTime) - new Date(a.createdTime);
         }
 
         setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
     };
     const onSortByDateDesc = () => {
         function sortData(a, b) {
-            return new Date(a.createdDate) - new Date(b.createdDate);
+            return new Date(a.createdTime) - new Date(b.createdTime);
         }
 
         setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
@@ -171,7 +74,6 @@ const TodoContainer = () => {
         }
         setSortDirection(sortDirection);
     };
-
     const getTodo = async () => {
         const options = {
             method: 'GET',
@@ -193,9 +95,10 @@ const TodoContainer = () => {
                 return {
                     id: todo.id,
                     title: todo.fields.title,
-                    createdDate: todo.fields.date
+                    createdTime: todo.createdTime
                 }
             });
+            console.log(todos)
 
             setTodoList(todos);
             sortList(sortDirection);
@@ -425,7 +328,6 @@ const TodoContainer = () => {
     const handleSearch = (inputValue) => {
         setSearchInput(inputValue);
     };
-
     const filterListTitles = (todoList, searchInput) => {
         return todoList.filter(
             (todo) =>
