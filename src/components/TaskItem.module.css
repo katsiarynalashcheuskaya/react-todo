@@ -1,9 +1,15 @@
 .taskTitle {
     padding: 0 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
 }
 
 .taskWrapper {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+}
+
+.checked {
+    text-decoration: line-through;
 }

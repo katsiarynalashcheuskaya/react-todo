@@ -4,12 +4,76 @@ import s from "./TodoContainer.module.css";
 import AddItemForm from "./AddItemForm";
 import IsLoading from "./IsLoading";
 import TodoList from "./TodoList";
+import Sort from "./Sort";
+import Search from "./Search";
 
 const TodoContainer = () => {
     const [todoList, setTodoList] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [sortDirection, setSortDirection] = useState(localStorage.getItem("sortDirection"));
+    const [searchInput, setSearchInput] = useState("");
 
+    /*Sort with JavaScript*/
+    const onSortByTitleAsc = () => {
+        function sortData(a, b) {
+            if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                return 1;
+            }
+            if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                return -1;
+            }
+            return 0;
+        }
+
+        setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
+    };
+    const onSortByTitleDes = () => {
+        function sortData(a, b) {
+            if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                return 1;
+            }
+            if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                return -1;
+            }
+            return 0;
+        }
+
+        setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
+    };
+    const onSortByDateAsc = () => {
+        function sortData(a, b) {
+            return new Date(b.createdTime) - new Date(a.createdTime);
+        }
+
+        setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
+    };
+    const onSortByDateDesc = () => {
+        function sortData(a, b) {
+            return new Date(a.createdTime) - new Date(b.createdTime);
+        }
+
+        setTodoList((oldTodoList) => [...oldTodoList].sort(sortData));
+    };
+    const sortList = (sortDirection) => {
+        switch (sortDirection) {
+            case "titleAsc":
+                onSortByTitleAsc();
+                break;
+            case "titleDesc":
+                onSortByTitleDes();
+                break;
+            case "createdDateAsc":
+                onSortByDateAsc();
+                break;
+            case "createdDateDesc":
+                onSortByDateDesc();
+                break;
+            default:
+                onSortByDateAsc();
+        }
+        setSortDirection(sortDirection);
+    };
     const getTodo = async () => {
         const options = {
             method: 'GET',
@@ -17,7 +81,7 @@ const TodoContainer = () => {
                 Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
             }
         }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}\\`
+        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}`
         try {
             const response = await fetch(url, options);
 
@@ -30,17 +94,21 @@ const TodoContainer = () => {
             const todos = data.records.map((todo) => {
                 return {
                     id: todo.id,
-                    title: todo.fields.title
+                    title: todo.fields.title,
+                    createdTime: todo.createdTime
                 }
             });
+            console.log(todos)
 
             setTodoList(todos);
+            sortList(sortDirection);
 
 
         } catch (error) {
             console.log(error.message)
         }
     }
+
     const postTodo = async (todo) => {
         try {
             const airtableData = {
@@ -68,10 +136,11 @@ const TodoContainer = () => {
             const data = await response.json();
             const newTodo = {
                 id: data.id,
-                title: data.fields.title
+                title: data.fields.title,
+                createdTime: data.createdTime
             }
 
-            setTodoList([newTodo, ...todoList])
+            setTodoList([newTodo, ...todoList]);
 
         } catch (error) {
             console.log(error.message);
@@ -107,7 +176,6 @@ const TodoContainer = () => {
         }
     }
     const getTasks = async () => {
-        /* console.log('getTasks rendering')*/
         const options = {
             method: 'GET',
             headers: {
@@ -221,7 +289,7 @@ const TodoContainer = () => {
                 setIsLoading(false)
             });
         getTasks();
-    }, [])
+    }, [sortDirection])
 
     const addTodo = (title) => {
         postTodo(title);
@@ -257,19 +325,32 @@ const TodoContainer = () => {
         setTasks(newTasks)
     }
 
+    const handleSearch = (inputValue) => {
+        setSearchInput(inputValue);
+    };
+    const filterListTitles = (todoList, searchInput) => {
+        return todoList.filter(
+            (todo) =>
+                todo.title &&
+                todo.title.toLowerCase().includes(searchInput.toLowerCase())
+        );
+    };
+
     /*const changeTaskTitle = (title, id) => {
        //updateTask(title, id)
    }*/
 
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
+            <Search onSearch={handleSearch}/>
             <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
+            <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
             {isLoading && <IsLoading/>}
             {todoList.length === 0 && !isLoading && (
                 <p>You don't have any todo lists yet.</p>
             )}
             {todoList.length > 0 && (
-                <TodoList todoList={todoList} tasks={tasks}
+                <TodoList todoList={filterListTitles(todoList, searchInput)} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
             )}
