@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import Button from "../Button";
 import Task from "./Task";
 import s from "./TodoListItem.module.css"
 import deleteIcon from "../assets/images/delete-icon.svg";
 import PropTypes from "prop-types";
+import {EditableSpan} from "./EditableSpan";
 
-const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
+const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddTask, changeTaskStatus, changeTaskTitle, changeTodoTitle}) => {
     let createdDate = new Date(date)
     let year = createdDate.getFullYear();
     let month = createdDate.getMonth()+1;
@@ -20,19 +21,22 @@ const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddT
     const callbackHandler = () => {
         onRemoveTodo(id)
     }
+
+    const editTodolistHandler = (newTitle) => changeTodoTitle(newTitle, id);
+
     return (
         <div className={s.todoCardWrapper}>
             <li>
                 <div className={s.titleAndButtonWrapper}>
                     <div className={s.titleAndDateWrapper}>
-                    <h2 className={s.todoTitle}>{todo}</h2>
-                    <span className={s.date}>created {`${month}.${dt}.${year}`}</span>
+                    <EditableSpan title={todo} callback={editTodolistHandler}/>
+                    <div className={s.date}>created {`${month}.${dt}.${year}`}</div>
                     </div>
                     <Button callback={callbackHandler}><img src={deleteIcon}/></Button>
                 </div>
 
                 <Task tasks={tasks} id={id} onRemoveTask={onRemoveTask} onAddTask={onAddTask}
-                      changeTaskStatus={changeTaskStatus}/>
+                      changeTaskStatus={changeTaskStatus} changeTaskTitle={changeTaskTitle}/>
             </li>
             {/*<div className={s.filterWrapper}>
             <div>All</div>

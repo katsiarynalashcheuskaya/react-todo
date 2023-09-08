@@ -4,7 +4,7 @@ import AddItemForm from "./AddItemForm";
 import s from "./Task.module.css"
 import PropTypes from "prop-types";
 
-const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus}) => {
+const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus, changeTaskTitle}) => {
     let tasksForTodolist  = tasks.filter(t => t.todoID === id);
     return (
         <ul className={s.tasksWrapper}>
@@ -17,7 +17,7 @@ const Task = ({tasks, onRemoveTask, id, onAddTask, changeTaskStatus}) => {
             {tasksForTodolist.length > 0 && (
             <div className={s.tasksList}>
             {tasksForTodolist.map(t => <TaskItem key={t.taskID} id={t.taskID} task={t.title} status={t.status}
-                                                 onRemoveTask={onRemoveTask} changeTaskStatus={changeTaskStatus}/>)}
+                                                 onRemoveTask={onRemoveTask} changeTaskStatus={changeTaskStatus} changeTaskTitle={changeTaskTitle}/>)}
             </div>
                 )}
             </ul>

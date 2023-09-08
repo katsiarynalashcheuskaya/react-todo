@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import c from "../App.module.css";
 import s from "./TodoContainer.module.css";
 import AddItemForm from "./AddItemForm";
@@ -98,7 +98,6 @@ const TodoContainer = () => {
                     createdTime: todo.createdTime
                 }
             });
-            console.log(todos)
 
             setTodoList(todos);
             sortList(sortDirection);
@@ -108,7 +107,6 @@ const TodoContainer = () => {
             console.log(error.message)
         }
     }
-
     const postTodo = async (todo) => {
         try {
             const airtableData = {
@@ -145,6 +143,37 @@ const TodoContainer = () => {
         } catch (error) {
             console.log(error.message);
             return null;
+        }
+    }
+    const editTodoTitle = async (newTitle, id) => {
+        try {
+            const airtableData = {
+                fields: {
+                    title: newTitle
+                }
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data ? {...data.fields, title: data.fields.title} : {...data.fields, title: "Empty title"}
+
+        } catch (error) {
+            console.log(error.message)
         }
     }
     const deleteItem = async (id) => {
@@ -233,7 +262,6 @@ const TodoContainer = () => {
             }
 
             const data = await response.json();
-            console.log(data)
             const newTask = {
                 todoID: data.fields.todo[0],
                 taskID: data.id,
@@ -292,9 +320,11 @@ const TodoContainer = () => {
     }, [sortDirection])
 
     const addTodo = (title) => {
+        console.log("addTodo")
         postTodo(title);
-    }
+    };
     const removeTodo = (id) => {
+        console.log("removeTodo")
         deleteItem(id);
         const newTodolist = todoList.filter(el => el.id !== id);
         setTodoList(newTodolist);
@@ -303,16 +333,19 @@ const TodoContainer = () => {
                 el.todoID === id ? deleteItem(el.taskID) : el)
         })
         setTasks(newTasks);
-    }
+    };
     const addTask = (title, id) => {
+        console.log("addTask")
         postTask(title, id);
     }
     const removeTask = (id) => {
+        console.log("removeTask")
         deleteItem(id)
         const newTasks = tasks.filter(el => el.taskID !== id);
         setTasks(newTasks);
     }
     const changeTaskStatus = (status, id) => {
+        console.log("changeTaskStatus")
         updateTaskStatus(status, id);
         const newTasks = tasks.map((task) => {
             if (task.taskID === id) {
@@ -328,17 +361,30 @@ const TodoContainer = () => {
     const handleSearch = (inputValue) => {
         setSearchInput(inputValue);
     };
-    const filterListTitles = (todoList, searchInput) => {
+    const filterListTitles = useCallback((todoList, searchInput) => {
         return todoList.filter(
             (todo) =>
                 todo.title &&
                 todo.title.toLowerCase().includes(searchInput.toLowerCase())
         );
-    };
+    }, [searchInput])
 
-    /*const changeTaskTitle = (title, id) => {
-       //updateTask(title, id)
-   }*/
+    const changeTodoTitle = (newTitle, id) => {
+        editTodoTitle(newTitle, id)
+        const newTodoList = todoList.map((todo) => {
+            if (todo.id === id) {
+                return {id: todo.id, ...todo, title: newTitle};
+            } else {
+                return todo;
+            }
+        });
+
+        setTodoList(newTodoList)
+    };
+    const changeTaskTitle = (newTitle, taskID) => {
+        console.log(newTitle)
+        /*editTaskTitle(todoID, taskID, newTitle)*/
+    };
 
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
@@ -352,7 +398,8 @@ const TodoContainer = () => {
             {todoList.length > 0 && (
                 <TodoList todoList={filterListTitles(todoList, searchInput)} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
-                          onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
+                          onAddTask={addTask} changeTaskStatus={changeTaskStatus} changeTodoTitle={changeTodoTitle}
+                          changeTaskTitle={changeTaskTitle}/>
             )}
         </div>
     );
