@@ -74,6 +74,8 @@ const TodoContainer = () => {
         }
         setSortDirection(sortDirection);
     };
+
+
     const getTodo = async () => {
         const options = {
             method: 'GET',
@@ -176,6 +178,7 @@ const TodoContainer = () => {
             console.log(error.message)
         }
     }
+
     const deleteItem = async (id) => {
         try {
             const airtableData = {
@@ -204,6 +207,7 @@ const TodoContainer = () => {
             console.log(error.message);
         }
     }
+
     const getTasks = async () => {
         const options = {
             method: 'GET',
@@ -310,6 +314,38 @@ const TodoContainer = () => {
             return null;
         }
     }
+    const editTaskTitle = async (newTitle, id) => {
+        try {
+            const airtableData = {
+                fields: {
+                    taskTitle: newTitle
+                }
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            return data ? {...data.fields, taskTitle: data.fields.taskTitle} : {...data.fields, taskTitle: "Empty title"}
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     useEffect(() => {
         getTodo()
@@ -334,41 +370,6 @@ const TodoContainer = () => {
         })
         setTasks(newTasks);
     };
-    const addTask = (title, id) => {
-        console.log("addTask")
-        postTask(title, id);
-    }
-    const removeTask = (id) => {
-        console.log("removeTask")
-        deleteItem(id)
-        const newTasks = tasks.filter(el => el.taskID !== id);
-        setTasks(newTasks);
-    }
-    const changeTaskStatus = (status, id) => {
-        console.log("changeTaskStatus")
-        updateTaskStatus(status, id);
-        const newTasks = tasks.map((task) => {
-            if (task.taskID === id) {
-                return {taskID: task.taskID, ...task, status: status};
-            } else {
-                return task;
-            }
-        });
-
-        setTasks(newTasks)
-    }
-
-    const handleSearch = (inputValue) => {
-        setSearchInput(inputValue);
-    };
-    const filterListTitles = useCallback((todoList, searchInput) => {
-        return todoList.filter(
-            (todo) =>
-                todo.title &&
-                todo.title.toLowerCase().includes(searchInput.toLowerCase())
-        );
-    }, [searchInput])
-
     const changeTodoTitle = (newTitle, id) => {
         editTodoTitle(newTitle, id)
         const newTodoList = todoList.map((todo) => {
@@ -381,10 +382,53 @@ const TodoContainer = () => {
 
         setTodoList(newTodoList)
     };
-    const changeTaskTitle = (newTitle, taskID) => {
-        console.log(newTitle)
-        /*editTaskTitle(todoID, taskID, newTitle)*/
+
+    const addTask = (title, id) => {
+        console.log("addTask")
+        postTask(title, id);
+    }
+    const removeTask = (id) => {
+        console.log("removeTask")
+        deleteItem(id)
+        const newTasks = tasks.filter(el => el.taskID !== id);
+        setTasks(newTasks);
+    }
+    const changeTaskStatus = (status, id) => {
+        updateTaskStatus(status, id);
+        const newTasks = tasks.map((task) => {
+            if (task.taskID === id) {
+                return {taskID: task.taskID, ...task, status: status};
+            } else {
+                return task;
+            }
+        });
+
+        setTasks(newTasks);
+    }
+    const changeTaskTitle = (newTitle, id) => {
+        editTaskTitle(newTitle, id)
+        const newTasks = tasks.map((task) => {
+            if (task.taskID === id) {
+                return {taskID: task.taskID, ...task, title: newTitle};
+            } else {
+                return task;
+            }
+        });
+
+        setTasks(newTasks)
     };
+
+    /*Searching*/
+    const handleSearch = (inputValue) => {
+        setSearchInput(inputValue);
+    };
+    const filterListTitles = useCallback((todoList, searchInput) => {
+        return todoList.filter(
+            (todo) =>
+                todo.title &&
+                todo.title.toLowerCase().includes(searchInput.toLowerCase())
+        );
+    }, [searchInput])
 
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>

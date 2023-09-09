@@ -8,13 +8,13 @@
 
 .titleAndButtonWrapper {
     display: flex;
-    align-items: center;
     justify-content: space-between;
 }
 
 .titleAndDateWrapper {
     display: flex;
     flex-direction: column;
+
 }
 
 .date {
@@ -42,7 +42,7 @@
 /*ТЕНЬ*/
 }
 
-.filterWrapper {
+/*.filterWrapper {
     display: flex;
     position: absolute;
     width: 100%;
@@ -59,9 +59,9 @@
     margin-top: 10px;
     font-weight: 600;
     font-size: 14px;
-}
+}*/
 
-@media (max-width: 598px) {
+@media (max-width: 612px) {
     .todoCardWrapper {
         min-width: 230px;
         width: 100%;

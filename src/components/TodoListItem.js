@@ -27,12 +27,14 @@ const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddT
     return (
         <div className={s.todoCardWrapper}>
             <li>
-                <div className={s.titleAndButtonWrapper}>
-                    <div className={s.titleAndDateWrapper}>
+                <div className={s.titleAndDateWrapper}>
+                    <div className={s.titleAndButtonWrapper}>
                     <EditableSpan title={todo} callback={editTodolistHandler}/>
-                    <div className={s.date}>created {`${month}.${dt}.${year}`}</div>
+                        <Button callback={callbackHandler}><img src={deleteIcon}/></Button>
                     </div>
-                    <Button callback={callbackHandler}><img src={deleteIcon}/></Button>
+
+                    <div className={s.date}>created {`${month}.${dt}.${year}`}</div>
+
                 </div>
 
                 <Task tasks={tasks} id={id} onRemoveTask={onRemoveTask} onAddTask={onAddTask}

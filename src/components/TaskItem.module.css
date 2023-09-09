@@ -1,7 +1,8 @@
-.taskTitle {
+.taskWrapper span {
     padding: 0 5px;
     font-family: 'Inter', sans-serif;
     font-size: 15px;
+    color: black;
 }
 
 .taskWrapper {
