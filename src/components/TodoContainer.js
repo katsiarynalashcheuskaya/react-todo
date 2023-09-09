@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import c from "../App.module.css";
 import s from "./TodoContainer.module.css";
 import AddItemForm from "./AddItemForm";
@@ -74,6 +74,7 @@ const TodoContainer = () => {
         }
         setSortDirection(sortDirection);
     };
+
     const getTodo = async () => {
         const options = {
             method: 'GET',
@@ -98,7 +99,6 @@ const TodoContainer = () => {
                     createdTime: todo.createdTime
                 }
             });
-            console.log(todos)
 
             setTodoList(todos);
             sortList(sortDirection);
@@ -108,7 +108,6 @@ const TodoContainer = () => {
             console.log(error.message)
         }
     }
-
     const postTodo = async (todo) => {
         try {
             const airtableData = {
@@ -147,6 +146,38 @@ const TodoContainer = () => {
             return null;
         }
     }
+    const editTodoTitle = async (newTitle, id) => {
+        try {
+            const airtableData = {
+                fields: {
+                    title: newTitle
+                }
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data ? {...data.fields, title: data.fields.title} : {...data.fields, title: "Empty title"}
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     const deleteItem = async (id) => {
         try {
             const airtableData = {
@@ -175,6 +206,7 @@ const TodoContainer = () => {
             console.log(error.message);
         }
     }
+
     const getTasks = async () => {
         const options = {
             method: 'GET',
@@ -182,7 +214,8 @@ const TodoContainer = () => {
                 Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
             }
         }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/`
+        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks?sort[0][field]=created&sort[0][direction]=desc`
+
         try {
             const response = await fetch(url, options);
 
@@ -233,7 +266,6 @@ const TodoContainer = () => {
             }
 
             const data = await response.json();
-            console.log(data)
             const newTask = {
                 todoID: data.fields.todo[0],
                 taskID: data.id,
@@ -282,6 +314,38 @@ const TodoContainer = () => {
             return null;
         }
     }
+    const editTaskTitle = async (newTitle, id) => {
+        try {
+            const airtableData = {
+                fields: {
+                    taskTitle: newTitle
+                }
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            return data ? {...data.fields, taskTitle: data.fields.taskTitle} : {...data.fields, taskTitle: "Empty title"}
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     useEffect(() => {
         getTodo()
@@ -293,7 +357,7 @@ const TodoContainer = () => {
 
     const addTodo = (title) => {
         postTodo(title);
-    }
+    };
     const removeTodo = (id) => {
         deleteItem(id);
         const newTodolist = todoList.filter(el => el.id !== id);
@@ -303,7 +367,20 @@ const TodoContainer = () => {
                 el.todoID === id ? deleteItem(el.taskID) : el)
         })
         setTasks(newTasks);
-    }
+    };
+    const changeTodoTitle = (newTitle, id) => {
+        editTodoTitle(newTitle, id)
+        const newTodoList = todoList.map((todo) => {
+            if (todo.id === id) {
+                return {id: todo.id, ...todo, title: newTitle};
+            } else {
+                return todo;
+            }
+        });
+
+        setTodoList(newTodoList)
+    };
+
     const addTask = (title, id) => {
         postTask(title, id);
     }
@@ -322,23 +399,32 @@ const TodoContainer = () => {
             }
         });
 
-        setTasks(newTasks)
+        setTasks(newTasks);
     }
+    const changeTaskTitle = (newTitle, id) => {
+        editTaskTitle(newTitle, id)
+        const newTasks = tasks.map((task) => {
+            if (task.taskID === id) {
+                return {taskID: task.taskID, ...task, title: newTitle};
+            } else {
+                return task;
+            }
+        });
 
+        setTasks(newTasks)
+    };
+
+    /*Searching*/
     const handleSearch = (inputValue) => {
         setSearchInput(inputValue);
     };
-    const filterListTitles = (todoList, searchInput) => {
+    const filterListTitles = useCallback((todoList, searchInput) => {
         return todoList.filter(
             (todo) =>
                 todo.title &&
                 todo.title.toLowerCase().includes(searchInput.toLowerCase())
         );
-    };
-
-    /*const changeTaskTitle = (title, id) => {
-       //updateTask(title, id)
-   }*/
+    }, [searchInput])
 
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
@@ -352,7 +438,8 @@ const TodoContainer = () => {
             {todoList.length > 0 && (
                 <TodoList todoList={filterListTitles(todoList, searchInput)} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
-                          onAddTask={addTask} changeTaskStatus={changeTaskStatus}/>
+                          onAddTask={addTask} changeTaskStatus={changeTaskStatus} changeTodoTitle={changeTodoTitle}
+                          changeTaskTitle={changeTaskTitle}/>
             )}
         </div>
     );

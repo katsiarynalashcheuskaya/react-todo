@@ -20,7 +20,7 @@ const Footer = () => {
                     <span>GitHub</span>
                 </a>
             </li>
-            <li><span>© Katsiaryna Lashcheuskaya {thisYear}</span></li>
+            <li><span className={s.nameSpan}>© Katsiaryna Lashcheuskaya {thisYear}</span></li>
             <li>
                 <a
                     href="https://www.linkedin.com/in/katsiaryna-lashcheuskaya-271210264/"

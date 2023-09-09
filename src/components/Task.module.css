@@ -14,9 +14,6 @@
 
 .tasksWrapper form input::placeholder {
     font-family: 'Inter', sans-serif;
-}
-
-.tasksWrapper form input::placeholder {
     margin-left: 5px;
 }
 

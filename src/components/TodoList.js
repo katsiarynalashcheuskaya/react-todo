@@ -5,12 +5,13 @@ import {useLocation} from "react-router-dom";
 import PropTypes from "prop-types";
 
 
-const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus}) => {
+const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus, changeTodoTitle, changeTaskTitle}) => {
     const location = useLocation();
     useEffect(() => {
         if (location.pathname === "/todo-app") {
             document.getElementById("app").style.backgroundColor = "#F5F5F5FF";
             document.getElementById("app").style.justifyContent = "initial";
+            document.getElementById("homeIcon").style.display = "block";
         }
     }, [location.pathname]);
     return (
@@ -18,7 +19,7 @@ const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, chang
             {todoList.map(t => {
                 return <TodoListItem key={t.id} id={t.id} todo={t.title} date={t.createdTime}
                                      tasks={tasks} onRemoveTodo={onRemoveTodo} onRemoveTask={onRemoveTask}
-                                     onAddTask={onAddTask} changeTaskStatus={changeTaskStatus}/>
+                                     onAddTask={onAddTask} changeTaskStatus={changeTaskStatus} changeTaskTitle={changeTaskTitle} changeTodoTitle={changeTodoTitle}/>
             })
             }
         </ul>

@@ -34,8 +34,13 @@
     height: 25px;
 }
 
+
 @media (max-width: 768px) {
     .footer li a span {
         display: none;
     }
+    .nameSpan {
+        font-size: 14px;
+    }
+
 }
