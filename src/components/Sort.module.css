@@ -9,7 +9,7 @@
     font-family: 'Inter', sans-serif;
 }
 
-@media (max-width: 598px) {
+@media (max-width: 603px) {
     .sortingWrapper {
         width: 100%;
     }

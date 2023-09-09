@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import Button from "../Button";
+import Button from "./Button";
 import Task from "./Task";
 import s from "./TodoListItem.module.css"
 import deleteIcon from "../assets/images/delete-icon.svg";
@@ -32,9 +32,7 @@ const TodoListItem = ({todo, onRemoveTodo, id, date, tasks, onRemoveTask, onAddT
                     <EditableSpan title={todo} callback={editTodolistHandler}/>
                         <Button callback={callbackHandler}><img src={deleteIcon}/></Button>
                     </div>
-
                     <div className={s.date}>created {`${month}.${dt}.${year}`}</div>
-
                 </div>
 
                 <Task tasks={tasks} id={id} onRemoveTask={onRemoveTask} onAddTask={onAddTask}

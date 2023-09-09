@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Button from "../Button";
+import Button from "./Button";
 import deleteIcon from "../assets/images/delete-icon.svg"
 import s from "./TaskItem.module.css"
 import PropTypes from "prop-types";

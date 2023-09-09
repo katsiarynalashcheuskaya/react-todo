@@ -1,4 +1,5 @@
 import React, {useState, memo} from 'react';
+import s from "./EditableSpan.module.css"
 
 export const EditableSpan = memo((props) => {
     const {title, callback} = props;

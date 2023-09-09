@@ -75,7 +75,6 @@ const TodoContainer = () => {
         setSortDirection(sortDirection);
     };
 
-
     const getTodo = async () => {
         const options = {
             method: 'GET',
@@ -215,7 +214,8 @@ const TodoContainer = () => {
                 Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`
             }
         }
-        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks/`
+        const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Tasks?sort[0][field]=created&sort[0][direction]=desc`
+
         try {
             const response = await fetch(url, options);
 
@@ -356,11 +356,9 @@ const TodoContainer = () => {
     }, [sortDirection])
 
     const addTodo = (title) => {
-        console.log("addTodo")
         postTodo(title);
     };
     const removeTodo = (id) => {
-        console.log("removeTodo")
         deleteItem(id);
         const newTodolist = todoList.filter(el => el.id !== id);
         setTodoList(newTodolist);
@@ -384,11 +382,9 @@ const TodoContainer = () => {
     };
 
     const addTask = (title, id) => {
-        console.log("addTask")
         postTask(title, id);
     }
     const removeTask = (id) => {
-        console.log("removeTask")
         deleteItem(id)
         const newTasks = tasks.filter(el => el.taskID !== id);
         setTasks(newTasks);

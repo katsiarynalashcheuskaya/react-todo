@@ -5,6 +5,13 @@
     color: black;
 }
 
+.taskWrapper input {
+    padding: 0 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: black;
+}
+
 .taskWrapper {
     display: flex;
     flex-direction: row;

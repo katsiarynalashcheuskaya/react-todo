@@ -1,9 +1,16 @@
-.titleAndDateWrapper span {
+.titleAndButtonWrapper span {
     text-transform: uppercase;
     font-size: 18px;
     word-break: break-word;
     color: black;
     font-weight: 600;
+}
+
+.titleAndButtonWrapper input {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+    max-width: 190px;
 }
 
 .titleAndButtonWrapper {
@@ -14,7 +21,6 @@
 .titleAndDateWrapper {
     display: flex;
     flex-direction: column;
-
 }
 
 .date {
@@ -61,12 +67,43 @@
     font-size: 14px;
 }*/
 
-@media (max-width: 612px) {
+@media (max-width: 1139px) {
+    .todoCardWrapper {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 1020px) {
+    .todoCardWrapper {
+        min-width: 400px;
+    }
+}
+
+@media (max-width: 903px) {
+    .todoCardWrapper {
+        min-width: 350px;
+    }
+}
+
+@media (max-width: 804px) {
+    .todoCardWrapper {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 703px) {
+    .todoCardWrapper {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 603px) {
     .todoCardWrapper {
         min-width: 230px;
         width: 100%;
     }
 }
+
 
 
 

@@ -11,6 +11,7 @@ const Header = () => {
         if (location.pathname === "/home") {
             document.getElementById("app").style.backgroundColor = "#FFFFFF";
             document.getElementById("app").style.justifyContent = "center";
+            document.getElementById("homeIcon").style.display = "none";
         }
     }, [location.pathname]);
 
@@ -19,7 +20,7 @@ const Header = () => {
             <div className={c.container}>
                 <div className={s.headerWrap}>
             <img className={s.logo} src={logo}/>
-            <Link to={"/home"}><img className={s.homeIcon} src={home}/></Link>
+            <Link to={"/home"}><img id="homeIcon" className={s.homeIcon} src={home}/></Link>
             </div>
             </div>
         </div>
