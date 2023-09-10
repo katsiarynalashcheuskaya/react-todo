@@ -5,7 +5,7 @@ import {useLocation} from "react-router-dom";
 import PropTypes from "prop-types";
 
 
-const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus, changeTodoTitle, changeTaskTitle}) => {
+const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus, changeTodoTitle, changeTaskTitle, changeFilter}) => {
     const location = useLocation();
     useEffect(() => {
         if (location.pathname === "/todo-app") {
@@ -16,10 +16,17 @@ const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, chang
     }, [location.pathname]);
     return (
         <ul className={s.todoCardsWrapper}>
-            {todoList.map(t => {
-                return <TodoListItem key={t.id} id={t.id} todo={t.title} date={t.createdTime}
-                                     tasks={tasks} onRemoveTodo={onRemoveTodo} onRemoveTask={onRemoveTask}
-                                     onAddTask={onAddTask} changeTaskStatus={changeTaskStatus} changeTaskTitle={changeTaskTitle} changeTodoTitle={changeTodoTitle}/>
+            {todoList.map(todo => {
+                let tasksForTodolist = tasks
+                if (todo.filterValue === "Active") {
+                    tasksForTodolist = tasksForTodolist.filter(t => !t.status)
+                }
+                if (todo.filterValue === "Completed") {
+                    tasksForTodolist = tasksForTodolist.filter(t => t.status);
+                }
+                return <TodoListItem key={todo.id} id={todo.id} todo={todo.title} date={todo.createdTime} filter={todo.filterValue}
+                                     tasks={tasksForTodolist} onRemoveTodo={onRemoveTodo} onRemoveTask={onRemoveTask}
+                                     onAddTask={onAddTask} changeTaskStatus={changeTaskStatus} changeTaskTitle={changeTaskTitle} changeTodoTitle={changeTodoTitle} changeFilter={changeFilter}/>
             })
             }
         </ul>

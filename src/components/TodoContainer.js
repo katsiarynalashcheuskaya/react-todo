@@ -96,7 +96,9 @@ const TodoContainer = () => {
                 return {
                     id: todo.id,
                     title: todo.fields.title,
-                    createdTime: todo.createdTime
+                    createdTime: todo.createdTime,
+                    filterValue: todo.fields.filterValue,
+                    tasks: todo.fields.tasks
                 }
             });
 
@@ -136,7 +138,9 @@ const TodoContainer = () => {
             const newTodo = {
                 id: data.id,
                 title: data.fields.title,
-                createdTime: data.createdTime
+                createdTime: data.createdTime,
+                filterValue: data.fields.filterValue,
+                tasks: data.fields.tasks
             }
 
             setTodoList([newTodo, ...todoList]);
@@ -172,6 +176,40 @@ const TodoContainer = () => {
 
             const data = await response.json();
             return data ? {...data.fields, title: data.fields.title} : {...data.fields, title: "Empty title"}
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    const editTodoFilter = async (filter, id) => {
+        try {
+            const airtableData = {
+                fields: {
+                    filterValue: filter
+                }
+            }
+
+            const response = await fetch(
+                `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${process.env.REACT_APP_TABLE_NAME}/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+                    },
+                    body: JSON.stringify(airtableData),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error(`Error has ocurred: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+
+            return data ? {...data.fields, filterValue: data.fields.filterValue} : {...data.fields, filterValue: "All"}
+
 
         } catch (error) {
             console.log(error.message)
@@ -380,6 +418,17 @@ const TodoContainer = () => {
 
         setTodoList(newTodoList)
     };
+    const changeFilter = (filter, id) => {
+        editTodoFilter(filter, id)
+        const newTodoList = todoList.filter((todo) => {
+            if (todo.id === id) {
+                return {id: todo.id, ...todo, filterValue: filter};
+            } else {
+                return todo;
+            }
+        });
+        setTodoList(newTodoList)
+    };
 
     const addTask = (title, id) => {
         postTask(title, id);
@@ -418,7 +467,7 @@ const TodoContainer = () => {
     const handleSearch = (inputValue) => {
         setSearchInput(inputValue);
     };
-    const filterListTitles = useCallback((todoList, searchInput) => {
+    const searchByListTitles = useCallback((todoList, searchInput) => {
         return todoList.filter(
             (todo) =>
                 todo.title &&
@@ -433,13 +482,13 @@ const TodoContainer = () => {
             <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
             {isLoading && <IsLoading/>}
             {todoList.length === 0 && !isLoading && (
-                <p>You don't have any todo lists yet.</p>
+                <p>You don't have any to do lists yet.</p>
             )}
             {todoList.length > 0 && (
-                <TodoList todoList={filterListTitles(todoList, searchInput)} tasks={tasks}
+                <TodoList todoList={searchByListTitles(todoList, searchInput)} tasks={tasks}
                           onRemoveTodo={removeTodo} onRemoveTask={removeTask}
                           onAddTask={addTask} changeTaskStatus={changeTaskStatus} changeTodoTitle={changeTodoTitle}
-                          changeTaskTitle={changeTaskTitle}/>
+                          changeTaskTitle={changeTaskTitle} changeFilter={changeFilter}/>
             )}
         </div>
     );

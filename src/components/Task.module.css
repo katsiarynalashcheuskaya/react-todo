@@ -1,6 +1,7 @@
 .tasksList {
     list-style: none;
     margin-top: 5px;
+    margin-bottom: 30px;
 }
 
 .tasksWrapper form input {

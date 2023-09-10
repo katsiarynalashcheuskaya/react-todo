@@ -48,7 +48,7 @@
 /*ТЕНЬ*/
 }
 
-/*.filterWrapper {
+.filterWrapper {
     display: flex;
     position: absolute;
     width: 100%;
@@ -57,15 +57,17 @@
     left: 0;
 }
 
-.filterWrapper div {
+.filterWrapper button {
     min-width: 76px;
     border-radius: 5px;
-    border: 2px solid #E7E7E7;
+    border: 1px solid #E7E7E7;
     text-align: center;
-    margin-top: 10px;
     font-weight: 600;
     font-size: 14px;
-}*/
+    height: 30px;
+    width: 100%;
+    color: black;
+}
 
 @media (max-width: 1139px) {
     .todoCardWrapper {
