@@ -420,13 +420,15 @@ const TodoContainer = () => {
     };
     const changeFilter = (filter, id) => {
         editTodoFilter(filter, id)
-        const newTodoList = todoList.filter((todo) => {
+        const newTodoList = todoList.map((todo) => {
+            console.log(todo)
             if (todo.id === id) {
                 return {id: todo.id, ...todo, filterValue: filter};
             } else {
                 return todo;
             }
         });
+        console.log(newTodoList)
         setTodoList(newTodoList)
     };
 
