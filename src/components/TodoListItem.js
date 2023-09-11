@@ -28,7 +28,6 @@ const TodoListItem = ({todo, onRemoveTodo, id, date, filter, tasks, onRemoveTask
     const onActiveClickHandler = useCallback(()=>changeFilter('Active', id), [id, changeFilter])
     const onCompletedClickHandler = useCallback(()=>changeFilter('Completed', id), [id, changeFilter])
 
-
     return (
         <div className={s.todoCardWrapper}>
             <li>

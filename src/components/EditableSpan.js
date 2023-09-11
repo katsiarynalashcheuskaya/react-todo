@@ -7,15 +7,20 @@ export const EditableSpan = memo((props) => {
     const [edit, setEdit] = useState(false)
     let [label, setLabel] = useState(title)
 
-    const onDoubleClickHandler = () =>{
+
+    const onDoubleClickHandler = () => {
         setEdit(!edit)
-        callback(label)
+        label.trim() ? callback(label) : setLabel(title)
     }
+
     const onChangeHandler = (e) => {
         setLabel(e.currentTarget.value)
     }
     const onKeyPressHandler = (e) => {
-        /*setError(null);*/
+        if (e.key === 'Escape') {
+            setEdit(!edit)
+            setLabel(title)
+        }
         if (e.key === 'Enter') {
             onDoubleClickHandler();
         }
