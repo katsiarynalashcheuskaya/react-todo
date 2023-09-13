@@ -139,7 +139,7 @@ const TodoContainer = () => {
                 id: data.id,
                 title: data.fields.title,
                 createdTime: data.createdTime,
-                filterValue: data.fields.filterValue,
+                filterValue: "All",
                 tasks: data.fields.tasks
             }
 

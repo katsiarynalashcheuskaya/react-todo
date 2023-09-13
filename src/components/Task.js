@@ -31,7 +31,8 @@ Task.propTypes = {
     tasks: PropTypes.array,
     onRemoveTask: PropTypes.func,
     onAddTask: PropTypes.func,
-    changeTaskStatus: PropTypes.func
+    changeTaskStatus: PropTypes.func,
+    changeTaskTitle: PropTypes.func
 }
 
 export default Task;

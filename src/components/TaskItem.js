@@ -36,7 +36,8 @@ TaskItem.propTypes = {
     task: PropTypes.string,
     status: PropTypes.bool,
     onRemoveTask: PropTypes.func,
-    changeTaskStatus: PropTypes.func
+    changeTaskStatus: PropTypes.func,
+    changeTaskTitle: PropTypes.func
 }
 
 export default TaskItem;

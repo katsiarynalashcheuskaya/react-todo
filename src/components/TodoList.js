@@ -39,7 +39,10 @@ TodoList.propTypes = {
     tasks: PropTypes.array,
     onRemoveTask: PropTypes.func,
     onAddTask: PropTypes.func,
-    changeTaskStatus: PropTypes.func
+    changeTaskStatus: PropTypes.func,
+    changeTodoTitle: PropTypes.func,
+    changeTaskTitle: PropTypes.func,
+    changeFilter: PropTypes.func
 }
 
 export default TodoList;

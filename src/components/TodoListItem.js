@@ -55,10 +55,15 @@ TodoListItem.propTypes = {
     todo: PropTypes.string,
     onRemoveTodo: PropTypes.func,
     id: PropTypes.string,
+    date: PropTypes.string,
     tasks: PropTypes.array,
     onRemoveTask: PropTypes.func,
     onAddTask: PropTypes.func,
-    changeTaskStatus: PropTypes.func
+    filter: PropTypes.string,
+    changeTaskTitle: PropTypes.func,
+    changeTaskStatus: PropTypes.func,
+    changeTodoTitle: PropTypes.func,
+    changeFilter: PropTypes.func
 }
 
 export default TodoListItem;

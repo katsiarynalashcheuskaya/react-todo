@@ -1,5 +1,6 @@
 import React, {useState, memo} from 'react';
 import s from "./EditableSpan.module.css"
+import PropTypes from "prop-types";
 
 export const EditableSpan = memo((props) => {
     const {title, callback} = props;
@@ -37,3 +38,8 @@ export const EditableSpan = memo((props) => {
             : <span onDoubleClick={onDoubleClickHandler}>{title}</span>
     );
 })
+
+EditableSpan.propTypes = {
+    callback: PropTypes.func,
+    title: PropTypes.string
+};
