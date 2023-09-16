@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {memo, useEffect} from 'react';
 import TodoListItem from "./TodoListItem";
 import s from "./TodoList.module.css"
 import {useLocation} from "react-router-dom";
 import PropTypes from "prop-types";
 
 
-const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus, changeTodoTitle, changeTaskTitle, changeFilter}) => {
+const TodoList = memo (({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, changeTaskStatus, changeTodoTitle, changeTaskTitle, changeFilter}) => {
     const location = useLocation();
     useEffect(() => {
         if (location.pathname === "/todo-app") {
@@ -14,6 +14,12 @@ const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, chang
             document.getElementById("homeIcon").style.display = "block";
         }
     }, [location.pathname]);
+
+        for (let i = 0; i <= tasks.length; i++) {
+            /*console.log(tasks[i])*/
+            let completedTasksCount = 0;
+            /*tasks[i].status ? completedTasksCount++ : console.log(completedTasksCount)*/
+    }
     return (
         <ul className={s.todoCardsWrapper}>
             {todoList.map(todo => {
@@ -31,7 +37,7 @@ const TodoList = ({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask, chang
             }
         </ul>
     )
-};
+});
 
 TodoList.propTypes = {
     todoList: PropTypes.array,

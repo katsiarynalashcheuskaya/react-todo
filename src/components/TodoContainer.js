@@ -264,13 +264,21 @@ const TodoContainer = () => {
             const data = await response.json();
 
             const tasks = data.records.map((task) => {
-                return {
-                    taskID: task.id,
-                    todoID: task.fields.todo[0],
-                    title: task.fields.taskTitle,
-                    status: task.fields.status
+                console.log(task.fields.status)
+                if (task.status === undefined) {
+                    return {
+                        taskID: task.id,
+                        todoID: task.fields.todo[0],
+                        title: task.fields.taskTitle,
+                        status: null
+                    } } else return {
+                        taskID: task.id,
+                        todoID: task.fields.todo[0],
+                        title: task.fields.taskTitle,
+                        status: task.fields.status
+                    }
                 }
-            });
+            );
 
             setTasks(tasks);
 
