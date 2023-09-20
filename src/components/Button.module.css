@@ -3,3 +3,7 @@
     background-color: transparent;
     cursor: pointer;
 }
+
+.activeButton {
+    background-color: #FFC666;
+}

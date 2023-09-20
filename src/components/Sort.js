@@ -1,5 +1,6 @@
 import React from 'react';
 import s from "./Sort.module.css"
+import PropTypes from "prop-types";
 
 const Sort = ({sortData, sortDirection, todoList}) => {
     let selectCheck = document.getElementById("sorting");
@@ -20,6 +21,12 @@ const Sort = ({sortData, sortDirection, todoList}) => {
             <option value="createdDateDesc">Sort by date(desc)</option>
         </select>
     );
+};
+
+Sort.propTypes = {
+    sortData: PropTypes.func,
+    sortDirection: PropTypes.string,
+    todoList: PropTypes.array
 };
 
 export default Sort;
