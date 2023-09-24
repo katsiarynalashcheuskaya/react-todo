@@ -5,10 +5,11 @@
     border-radius: 5px;
     border: 2px solid #E7E7E7;
     padding-left: 10px;
+    outline: 0;
 }
 
 .searchWrapper input:focus {
-    outline-color: #FF8040;
+   border-color: #FF8040;
 }
 
 .searchWrapper input::placeholder {

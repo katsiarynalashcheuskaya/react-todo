@@ -1,3 +1,10 @@
+.taskWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 .taskWrapper span {
     padding: 0 5px;
     font-family: 'Inter', sans-serif;
@@ -6,16 +13,16 @@
 }
 
 .taskWrapper input {
+    outline: 0;
     padding: 0 5px;
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     color: black;
-}
-
-.taskWrapper {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
+    border: 2px solid #E7E7E7;
+    border-radius: 5px;
+    margin-right: 5px;
+    display: grid;
+    grid-template-columns: 1em auto;
 }
 
 .checked {

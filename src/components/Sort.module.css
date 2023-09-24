@@ -1,16 +1,28 @@
 .sortingWrapper {
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
     width: 300px;
-    border-radius: 5px;
+    height: 28px;
+    margin-bottom: 10px;
+    outline: 0;
     border: 2px solid #E7E7E7;
+    border-radius: 5px;
+    background-color: #FFFFFF;
     padding-left: 10px;
     font-family: 'Inter', sans-serif;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select:focus {
+    border:  2px solid #FF8040;
+}
+
+select::-ms-expand {
+    display: none;
 }
 
 @media (max-width: 603px) {
-    .sortingWrapper {
+    .sortingWrapper, .sortingWrapper select{
         width: 100%;
     }
 }

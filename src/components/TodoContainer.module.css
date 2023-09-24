@@ -19,6 +19,7 @@ form input {
     border-radius: 5px;
     border: 2px solid #E7E7E7;
     padding-left: 10px;
+    outline: 0;
 }
 
 form input::placeholder {

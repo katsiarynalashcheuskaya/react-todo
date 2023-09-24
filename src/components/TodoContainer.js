@@ -479,19 +479,20 @@ const TodoContainer = () => {
 
     return (
         <div className={`${s.todoWrapper} ${c.container}`}>
+            {isLoading ? <IsLoading/> : <>
             <Search onSearch={handleSearch}/>
-            <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
-            <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
-            {isLoading && <IsLoading/>}
+                <AddItemForm callback={addTodo} placeholder={'New todo...'} buttonTitle={"+"} maxLengthValue={"14"}/>
+                <Sort sortData={sortList} sortDirection={sortDirection} todoList={todoList}/>
             {todoList.length === 0 && !isLoading && (
                 <p>You don't have any to do lists yet.</p>
-            )}
+                )}
             {todoList.length > 0 && (
                 <TodoList todoList={searchByListTitles(todoList, searchInput)} tasks={tasks}
-                          onRemoveTodo={removeTodo} onRemoveTask={removeTask}
-                          onAddTask={addTask} changeTaskStatus={changeTaskStatus} changeTodoTitle={changeTodoTitle}
-                          changeTaskTitle={changeTaskTitle} changeFilter={changeFilter}/>
-            )}
+                onRemoveTodo={removeTodo} onRemoveTask={removeTask}
+                onAddTask={addTask} changeTaskStatus={changeTaskStatus} changeTodoTitle={changeTodoTitle}
+                changeTaskTitle={changeTaskTitle} changeFilter={changeFilter}/>
+                )}
+            </>}
         </div>
     );
 };
