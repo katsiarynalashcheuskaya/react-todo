@@ -24,7 +24,6 @@ const TaskItem = ({task, onRemoveTask, id, status, changeTaskStatus, changeTaskT
             <li className={`${s.taskWrapper} ${isCheckedClass}`}>
                 <input type="checkbox" checked={status ? status : ''} onChange={changeTaskStatusHandler}/>
                 <EditableSpan title={task} callback={editTaskHandler}/>
-               {/* <div className={s.taskTitle}>{task}</div>*/}
                 <Button callback={deleteTaskHandler}><img src={deleteIcon}/></Button>
             </li>
     )

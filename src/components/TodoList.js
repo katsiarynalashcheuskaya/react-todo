@@ -15,11 +15,6 @@ const TodoList = memo (({todoList, onRemoveTodo, tasks, onRemoveTask, onAddTask,
         }
     }, [location.pathname]);
 
-        for (let i = 0; i <= tasks.length; i++) {
-            /*console.log(tasks[i])*/
-            let completedTasksCount = 0;
-            /*tasks[i].status ? completedTasksCount++ : console.log(completedTasksCount)*/
-    }
     return (
         <ul className={s.todoCardsWrapper}>
             {todoList.map(todo => {

@@ -29,7 +29,8 @@ export const EditableSpan = memo((props) => {
 
     return (
         edit
-            ? <input value={label}
+            ? <input className={s.inputClass}
+                    value={label}
                      onBlur={onDoubleClickHandler}
                      onChange={onChangeHandler}
                      onKeyDown={onKeyPressHandler}

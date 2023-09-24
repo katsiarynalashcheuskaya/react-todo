@@ -1,4 +1,3 @@
-.error {
-    border: 1px solid red;
-    background-color: #ffe1ee;
+.inputClass {
+    min-width: 130px;
 }
