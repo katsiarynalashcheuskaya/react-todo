@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-todo/static/css/main.1f526c4b.css",
-    "main.js": "/react-todo/static/js/main.d26f3cfd.js",
+    "main.js": "/react-todo/static/js/main.55ae9eef.js",
     "static/js/787.06469d7b.chunk.js": "/react-todo/static/js/787.06469d7b.chunk.js",
     "static/media/main.jpg": "/react-todo/static/media/main.088278dc0d4b8b8f369f.jpg",
     "static/media/error1.jpg": "/react-todo/static/media/error1.ce293654fc5b055593cf.jpg",
@@ -13,11 +13,11 @@
     "index.html": "/react-todo/index.html",
     "static/media/delete-icon.svg": "/react-todo/static/media/delete-icon.617a24249f7016ba39e0d908a5ce2250.svg",
     "main.1f526c4b.css.map": "/react-todo/static/css/main.1f526c4b.css.map",
-    "main.d26f3cfd.js.map": "/react-todo/static/js/main.d26f3cfd.js.map",
+    "main.55ae9eef.js.map": "/react-todo/static/js/main.55ae9eef.js.map",
     "787.06469d7b.chunk.js.map": "/react-todo/static/js/787.06469d7b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1f526c4b.css",
-    "static/js/main.d26f3cfd.js"
+    "static/js/main.55ae9eef.js"
   ]
 }
