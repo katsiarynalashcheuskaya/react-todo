@@ -1,6 +1,6 @@
 import s from './App.module.css';
 import React from "react";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TodoContainer from "./components/TodoContainer";
@@ -13,7 +13,7 @@ export const PATH = {
 }
 
 const App = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Header/>
         <div id="app" className={s.wrap}>
         <Routes>
@@ -24,7 +24,7 @@ const App = () => {
         </Routes>
         </div>
         <Footer/>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default App;
