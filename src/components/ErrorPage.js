@@ -8,9 +8,9 @@ import home from "../assets/images/home_button.svg";
 
 const ErrorPage = () => {
     return (
-        <div className={`${s.ErrorPageWrapper} ${c.container}`}>
+        <div className={`${s.errorPageWrapper} ${c.container}`}>
             <img src={error}/>
-            <div className={s.Error}>
+            <div className={s.error}>
                 <h2>There's nothing here.</h2>
                 <p>Not all who wander are lost. But you certainly are.</p>
                 <Link to={PATH.HOME}><img className={s.homeButton} src={home}/></Link>

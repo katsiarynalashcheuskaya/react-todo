@@ -1,0 +1,8 @@
+.loadingWrapper {
+    display: flex;
+    justify-content: center;
+}
+.loadingWrapper img {
+    width: 40px;
+    height: 40px;
+}
